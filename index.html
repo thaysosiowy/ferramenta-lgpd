@@ -1933,22 +1933,28 @@
         responses: responses
     };
 
-    // Integração com Google Sheets usando método correto
+    // Log para debug
+    console.log('Enviando dados:', assessmentData);
+
+    // Enviar para Google Sheets
     fetch('https://script.google.com/macros/s/AKfycbx1UJ4xyNMPJcQyIDoKbPoRL5PtJeNO3nj0Zhw2Y6LGZCLqaOkiWw99rTlcr-ZADGX5Jw/exec', {
         method: 'POST',
-        mode: 'no-cors', // Importante para evitar erro de CORS
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(assessmentData)
     })
-    .then(() => {
-        console.log('Dados enviados com sucesso para Google Sheets');
-        // Não podemos processar a resposta com no-cors, mas o envio funcionará
+    .then(response => {
+        console.log('Resposta recebida:', response.status);
+        return response.json();
+    })
+    .then(data => {
+        console.log('Sucesso:', data);
     })
     .catch(error => {
-        console.error('Erro ao enviar dados:', error);
-        // Mesmo com erro, os dados podem ter sido enviados
+        console.error('Erro:', error);
+        // Mesmo com erro, mostrar mensagem para o usuário
+        console.log('Dados podem ter sido enviados mesmo com erro de CORS');
     });
 }
         // Adicionar event listeners para seleção de opções
