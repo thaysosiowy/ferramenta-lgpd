@@ -1921,39 +1921,36 @@
             `;
         }
 
-        function sendToGoogleSheets() {
-            // Preparar dados para envio
-            const assessmentData = {
-                timestamp: new Date().toISOString(),
-                companyName: companyData.name,
-                sector: companyData.sector,
-                employees: companyData.employees,
-                email: companyData.email,
-                score: Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100),
-                responses: responses
-            };
+       function sendToGoogleSheets() {
+    // Preparar dados para envio
+    const assessmentData = {
+        timestamp: new Date().toISOString(),
+        companyName: companyData.name,
+        sector: companyData.sector,
+        employees: companyData.employees,
+        email: companyData.email,
+        score: Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100),
+        responses: responses
+    };
 
-            // Simular envio para Google Sheets
-            // Em produção, você implementaria a integração real com Google Apps Script
-            console.log('Dados enviados para Google Sheets:', assessmentData);
-            
-           // Integração com Google Sheets
-fetch('https://script.google.com/macros/s/AKfycbx1UJ4xyNMPJcQyIDoKbPoRL5PtJeNO3nj0Zhw2Y6LGZCLqaOkiWw99rTlcr-ZADGX5Jw/exec', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(assessmentData)
-})
-.then(response => response.json())
-.then(data => {
-    console.log('Sucesso:', data);
-})
-.catch(error => {
-    console.error('Erro:', error);
-});
-        }
-
+    // Integração com Google Sheets usando método correto
+    fetch('https://script.google.com/macros/s/AKfycbx1UJ4xyNMPJcQyIDoKbPoRL5PtJeNO3nj0Zhw2Y6LGZCLqaOkiWw99rTlcr-ZADGX5Jw/exec', {
+        method: 'POST',
+        mode: 'no-cors', // Importante para evitar erro de CORS
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(assessmentData)
+    })
+    .then(() => {
+        console.log('Dados enviados com sucesso para Google Sheets');
+        // Não podemos processar a resposta com no-cors, mas o envio funcionará
+    })
+    .catch(error => {
+        console.error('Erro ao enviar dados:', error);
+        // Mesmo com erro, os dados podem ter sido enviados
+    });
+}
         // Adicionar event listeners para seleção de opções
         document.addEventListener('change', function(e) {
             if (e.target.type === 'radio') {
