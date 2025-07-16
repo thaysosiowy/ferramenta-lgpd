@@ -1933,15 +1933,21 @@
                 responses: responses
             };
 
-            // Simular envio para Google Sheets
-            // Em produção, você implementaria a integração real com Google Apps Script
-            console.log('Dados enviados para Google Sheets:', assessmentData);
-            
-            // Aqui você adicionaria a chamada real para o Google Apps Script
-            // fetch(https://script.google.com/macros/s/AKfycbxkkdNZe2KbMDNYfU5-69v8M-TiiQE1ZeyKb1ltj2vWnGeDqxmg0IbUY0WsOrDdh8Q7Jw/exec, {
-            //     method: 'POST',
-            //     body: JSON.stringify(assessmentData)
-            // });
+           // Enviar para Google Sheets
+    fetch(https://script.google.com/macros/s/AKfycbxctXNZllFMRKtZ_No0S6HDl81EyM6dmd1ZHdPbHwcoCewq5R-xLDSKGIlO7Y3ah4Ibag/exec, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(assessmentData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Dados enviados com sucesso:', data);
+    })
+    .catch(error => {
+        console.error('Erro ao enviar dados:', error);
+    });
         }
 
         // Adicionar event listeners para seleção de opções
