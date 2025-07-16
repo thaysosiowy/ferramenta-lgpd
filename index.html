@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -27,50 +27,90 @@
         .header {
             text-align: center;
             color: white;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .header h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            font-weight: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header .icon {
+            font-size: 3rem;
         }
 
         .header p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             opacity: 0.9;
         }
 
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
-
         .progress-bar {
-            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
             height: 8px;
-            background: #e9ecef;
             border-radius: 4px;
-            margin-bottom: 30px;
+            margin: 20px 0;
             overflow: hidden;
         }
 
         .progress-fill {
+            background: #4CAF50;
             height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #45a049);
             border-radius: 4px;
             transition: width 0.3s ease;
         }
 
-        .step-title {
+        .step-indicator {
             text-align: center;
             color: white;
-            font-size: 1.5rem;
             margin-bottom: 20px;
-            font-weight: 300;
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .card h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .step h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .step p {
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
         }
 
         .form-group {
@@ -87,10 +127,10 @@
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-size: 1rem;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
             transition: border-color 0.3s ease;
         }
 
@@ -100,33 +140,32 @@
             border-color: #667eea;
         }
 
-        .form-group small {
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-top: 5px;
-            display: block;
-        }
-
         .question {
             margin-bottom: 30px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            border-radius: 0 8px 8px 0;
         }
 
         .question h3 {
-            margin-bottom: 15px;
             color: #333;
+            margin-bottom: 15px;
             font-size: 1.1rem;
-            line-height: 1.4;
         }
 
         .options {
-            display: grid;
+            display: flex;
+            flex-direction: column;
             gap: 10px;
         }
 
         .option {
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             background: white;
@@ -134,40 +173,45 @@
 
         .option:hover {
             border-color: #667eea;
-            background: #f8f9ff;
-        }
-
-        .option.selected {
-            border-color: #667eea;
-            background: #667eea;
-            color: white;
+            background: #f0f4ff;
         }
 
         .option input[type="radio"] {
-            display: none;
+            margin-right: 12px;
+            width: auto;
+        }
+
+        .option.selected {
+            border-color: #4CAF50;
+            background: #e8f5e8;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
         }
 
         .btn {
-            padding: 15px 30px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 10px;
-            font-size: 1rem;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            text-align: center;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: #667eea;
             color: white;
         }
 
         .btn-primary:hover {
+            background: #5a6fd8;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
         .btn-secondary {
@@ -181,100 +225,63 @@
 
         .intro-features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
-            margin: 50px 0;
+            margin: 40px 0;
         }
 
         .feature {
             text-align: center;
-            padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
+            color: #333;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .feature-icon {
             font-size: 3rem;
-            margin-bottom: 20px;
-            display: block;
+            margin-bottom: 15px;
+            color: #4CAF50;
         }
 
         .feature h3 {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-size: 1.3rem;
-            font-weight: 600;
             color: #333;
         }
 
         .feature p {
-            line-height: 1.6;
-            font-size: 1rem;
-            color: #333; /* CORRIGIDO: Era transparente, agora é legível */
+            color: #666;
+            line-height: 1.5;
         }
 
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin: 50px 0;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
             text-align: center;
         }
 
         .stat {
-            padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
             color: #333;
         }
 
-        .stat-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            display: block;
-        }
-
         .stat-number {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: bold;
             color: #4CAF50;
-            margin-bottom: 8px;
-            display: block;
         }
 
         .stat-label {
-            font-size: 1rem;
-            color: #333; /* CORRIGIDO: Era #555, agora mais legível */
-            font-weight: 500;
-            line-height: 1.3;
-        }
-
-        .cta-section {
-            text-align: center;
-            margin: 50px 0;
-        }
-
-        .btn-cta {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-            padding: 20px 40px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.4);
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
         }
 
         .results {
@@ -323,31 +330,29 @@
 
         .recommendation {
             background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
+            padding: 20px;
+            border-radius: 10px;
             margin-bottom: 20px;
-            border-left: 5px solid #667eea;
+            border-left: 4px solid #667eea;
         }
 
         .recommendation h4 {
             color: #333;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
 
         .recommendation p {
-            color: #333; /* CORRIGIDO: Era #666, agora mais legível */
+            color: #666;
             line-height: 1.6;
-            margin-bottom: 10px;
         }
 
         .priority {
             display: inline-block;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .priority.high {
@@ -367,7 +372,7 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 10px;
             }
 
             .header h1 {
@@ -375,48 +380,15 @@
             }
 
             .card {
-                padding: 25px;
+                padding: 20px;
             }
 
             .stats {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
             }
 
             .intro-features {
                 grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .stat {
-                padding: 20px 15px;
-            }
-
-            .feature {
-                padding: 25px 15px;
-            }
-
-            .stat-number {
-                font-size: 1.8rem;
-            }
-
-            .stat-label {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-number {
-                font-size: 1.6rem;
-            }
-            
-            .btn-cta {
-                padding: 15px 30px;
-                font-size: 1.1rem;
             }
         }
 
@@ -446,1240 +418,1216 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        .hidden {
-            display: none;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-
-        .navigation .btn {
-            min-width: 120px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🛡️ Avaliação de Conformidade LGPD</h1>
+            <h1><span class="icon"></span> Avaliação de Conformidade LGPD</h1>
             <p>Diagnóstico especializado baseado em metodologia científica e conformidade legal brasileira</p>
         </div>
 
         <div class="progress-bar">
-            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        <div class="step-title" id="stepTitle">Introdução</div>
+        <div class="step-indicator" id="stepIndicator">Introdução</div>
 
         <!-- Etapa 0: Introdução -->
-        <div id="step0" class="card">
-            <h2 style="text-align: center; margin-bottom: 30px; color: #333;">Diagnóstico Especializado em LGPD</h2>
-            <p style="text-align: center; margin-bottom: 40px; color: #666; font-size: 1.1rem; line-height: 1.6;">
-                Esta ferramenta foi desenvolvida com base na metodologia científica de conformidade LGPD, incorporando as melhores práticas internacionais de Privacy by Design e as diretrizes da ANPD.
-            </p>
+        <div class="step active" id="step0">
+            <div class="card">
+                <h2>Diagnóstico Especializado em LGPD</h2>
+                <p>Esta ferramenta foi desenvolvida com base na metodologia científica de conformidade LGPD, incorporando as melhores práticas internacionais de Privacy by Design e as diretrizes da ANPD.</p>
+                
+                <div class="intro-features">
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <h3>Conformidade Legal</h3>
+                        <p>Baseado integralmente na Lei 13.709/2018 e regulamentações da ANPD</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <h3>Metodologia Científica</h3>
+                        <p>Framework validado por especialistas em proteção de dados</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <h3>Recomendações Específicas</h3>
+                        <p>Orientações personalizadas por setor, porte e nível de maturidade</p>
+                    </div>
+                </div>
 
-            <div class="intro-features">
-                <div class="feature">
-                    <span class="feature-icon">✅</span>
-                    <h3>Conformidade Legal</h3>
-                    <p>Baseado integralmente na Lei 13.709/2018 e regulamentações da ANPD</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">⏱ 15-20</div>
+                        <div class="stat-label">minutos<br>Tempo</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number"> 45</div>
+                        <div class="stat-label">questões<br>Perguntas especializadas</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number"> Diagnóstico</div>
+                        <div class="stat-label">Resultado detalhado</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number"> Plano</div>
+                        <div class="stat-label">Adequação estruturado</div>
+                    </div>
                 </div>
-                <div class="feature">
-                    <span class="feature-icon">📊</span>
-                    <h3>Metodologia Científica</h3>
-                    <p>Framework validado por especialistas em proteção de dados</p>
-                </div>
-                <div class="feature">
-                    <span class="feature-icon">🎯</span>
-                    <h3>Recomendações Específicas</h3>
-                    <p>Orientações personalizadas por setor, porte e nível de maturidade</p>
-                </div>
-            </div>
 
-            <div class="stats">
-                <div class="stat">
-                    <span class="stat-icon">⏱️</span>
-                    <span class="stat-number">15-20</span>
-                    <div class="stat-label">minutos<br>Tempo estimado</div>
+                <div class="navigation">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="nextStep()">Iniciar Avaliação </button>
                 </div>
-                <div class="stat">
-                    <span class="stat-icon">📋</span>
-                    <span class="stat-number">45</span>
-                    <div class="stat-label">questões<br>Perguntas especializadas</div>
-                </div>
-                <div class="stat">
-                    <span class="stat-icon">🎯</span>
-                    <span class="stat-number">Diagnóstico</span>
-                    <div class="stat-label">Resultado detalhado</div>
-                </div>
-                <div class="stat">
-                    <span class="stat-icon">📈</span>
-                    <span class="stat-number">Plano</span>
-                    <div class="stat-label">Adequação estruturado</div>
-                </div>
-            </div>
-
-            <div class="cta-section">
-                <button class="btn-cta" onclick="nextStep()">Iniciar Avaliação →</button>
             </div>
         </div>
 
         <!-- Etapa 1: Informações da Empresa -->
-        <div id="step1" class="card hidden">
-            <h2 style="margin-bottom: 20px;">Informações da Empresa</h2>
-            <p style="margin-bottom: 30px; color: #666;">Forneça informações básicas para personalizar as recomendações conforme seu perfil empresarial.</p>
+        <div class="step" id="step1">
+            <div class="card">
+                <h2>Informações da Empresa</h2>
+                <p>Forneça informações básicas para personalizar as recomendações conforme seu perfil empresarial.</p>
+                
+                <div class="form-group">
+                    <label for="companyName">Nome da Empresa *</label>
+                    <input type="text" id="companyName" placeholder="Digite o nome da sua empresa" required>
+                    <div class="error" id="companyNameError"></div>
+                </div>
 
-            <div class="form-group">
-                <label for="companyName">Nome da Empresa *</label>
-                <input type="text" id="companyName" placeholder="Digite o nome da sua empresa" required>
-            </div>
+                <div class="form-group">
+                    <label for="sector">Setor de Atuação *</label>
+                    <select id="sector" required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="tecnologia">Tecnologia</option>
+                        <option value="saude">Saúde</option>
+                        <option value="financeiro">Financeiro</option>
+                        <option value="educacao">Educação</option>
+                        <option value="varejo">Varejo</option>
+                        <option value="servicos">Serviços</option>
+                        <option value="industria">Indústria</option>
+                        <option value="governo">Governo/Público</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                    <div class="error" id="sectorError"></div>
+                </div>
 
-            <div class="form-group">
-                <label for="sector">Setor de Atuação *</label>
-                <select id="sector" required>
-                    <option value="">Selecione uma opção</option>
-                    <option value="Tecnologia">Tecnologia</option>
-                    <option value="Saúde">Saúde</option>
-                    <option value="Financeiro">Financeiro</option>
-                    <option value="Educação">Educação</option>
-                    <option value="Varejo">Varejo</option>
-                    <option value="Serviços">Serviços</option>
-                    <option value="Indústria">Indústria</option>
-                    <option value="Governo/Público">Governo/Público</option>
-                    <option value="Outro">Outro</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="employees">Número de Funcionários *</label>
+                    <select id="employees" required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="1-10">1-10 funcionários</option>
+                        <option value="11-50">11-50 funcionários</option>
+                        <option value="51-200">51-200 funcionários</option>
+                        <option value="201-500">201-500 funcionários</option>
+                        <option value="500+">Mais de 500 funcionários</option>
+                    </select>
+                    <div class="error" id="employeesError"></div>
+                </div>
 
-            <div class="form-group">
-                <label for="employees">Número de Funcionários *</label>
-                <select id="employees" required>
-                    <option value="">Selecione uma opção</option>
-                    <option value="1-10">1-10 funcionários</option>
-                    <option value="11-50">11-50 funcionários</option>
-                    <option value="51-200">51-200 funcionários</option>
-                    <option value="201-500">201-500 funcionários</option>
-                    <option value="500+">Mais de 500 funcionários</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="email">E-mail para Contato *</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                    <small style="color: #666; font-size: 0.9rem;">Para envio sobre atualizações do mundo LGPD</small>
+                    <div class="error" id="emailError"></div>
+                </div>
 
-            <div class="form-group">
-                <label for="email">E-mail para Contato *</label>
-                <input type="email" id="email" placeholder="seu@email.com" required>
-                <small>Receba atualizações sobre LGPD e proteção de dados</small>
-            </div>
-
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Próximo </button>
+                </div>
             </div>
         </div>
 
-        <!-- Etapas de Perguntas (2-10) -->
-        <div id="step2" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Governança e Estrutura</h2>
-            
-            <div class="question">
-                <h3>1. A empresa possui um programa formal de governança em privacidade conforme Art. 50 da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q1" value="4">
-                        <span>Sim, programa completo implementado e documentado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="3">
-                        <span>Programa parcialmente implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="2">
-                        <span>Em fase de desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="1">
-                        <span>Não possui programa de governança</span>
-                    </label>
+        <!-- Etapas 2-10: Perguntas -->
+        <div class="step" id="step2">
+            <div class="card">
+                <h2>Governança e Estrutura</h2>
+                <p>Avaliação da estrutura de governança conforme Art. 50 da LGPD.</p>
+                
+                <div class="question">
+                    <h3>1. A empresa possui um programa formal de governança em privacidade?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="4"> Programa completo e estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="3"> Programa em desenvolvimento
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="2"> Políticas básicas implementadas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="1"> Iniciativas pontuais
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="0"> Não possui programa
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>2. Há um encarregado (DPO) designado para proteção de dados conforme Art. 41 da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q2" value="4">
-                        <span>Sim, DPO qualificado e atuante</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q2" value="3">
-                        <span>DPO designado, mas com capacitação limitada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q2" value="2">
-                        <span>Em processo de designação</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q2" value="1">
-                        <span>Não possui DPO designado</span>
-                    </label>
+                <div class="question">
+                    <h3>2. Há um encarregado (DPO) designado para proteção de dados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="4"> DPO qualificado e atuante
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="3"> DPO designado em treinamento
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="2"> Responsável interno designado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="1"> Em processo de designação
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="0"> Não possui DPO
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>3. A empresa possui políticas internas de proteção de dados documentadas?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q3" value="4">
-                        <span>Políticas completas, atualizadas e implementadas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q3" value="3">
-                        <span>Políticas básicas implementadas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q3" value="2">
-                        <span>Políticas em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q3" value="1">
-                        <span>Não possui políticas documentadas</span>
-                    </label>
+                <div class="question">
+                    <h3>3. A empresa possui políticas internas de proteção de dados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="4"> Políticas completas e atualizadas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="3"> Políticas adequadas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="2"> Políticas básicas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="1"> Políticas em desenvolvimento
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="0"> Não possui políticas
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>4. Existe um comitê ou estrutura organizacional dedicada à privacidade?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q4" value="4">
-                        <span>Comitê ativo com representantes de todas as áreas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q4" value="3">
-                        <span>Estrutura básica implementada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q4" value="2">
-                        <span>Em fase de estruturação</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q4" value="1">
-                        <span>Não possui estrutura dedicada</span>
-                    </label>
+                <div class="question">
+                    <h3>4. Há treinamentos regulares sobre LGPD para funcionários?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="4"> Programa estruturado e regular
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="3"> Treinamentos periódicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="2"> Treinamentos básicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="1"> Treinamentos esporádicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="0"> Não há treinamentos
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>5. A alta direção está engajada e comprometida com a proteção de dados?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q5" value="4">
-                        <span>Total engajamento com recursos adequados</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q5" value="3">
-                        <span>Engajamento moderado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q5" value="2">
-                        <span>Engajamento limitado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q5" value="1">
-                        <span>Pouco ou nenhum engajamento</span>
-                    </label>
+                <div class="question">
+                    <h3>5. A empresa realiza auditorias internas de conformidade?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="4"> Auditorias regulares e estruturadas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="3"> Auditorias periódicas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="2"> Verificações básicas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="1"> Verificações esporádicas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="0"> Não realiza auditorias
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Próximo </button>
+                </div>
             </div>
         </div>
 
         <!-- Etapa 3: Mapeamento e Inventário -->
-        <div id="step3" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Mapeamento e Inventário</h2>
-            
-            <div class="question">
-                <h3>6. A empresa possui inventário completo dos dados pessoais tratados conforme Art. 37 da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q6" value="4">
-                        <span>Inventário completo, atualizado e documentado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q6" value="3">
-                        <span>Inventário parcial implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q6" value="2">
-                        <span>Em processo de mapeamento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q6" value="1">
-                        <span>Não possui inventário</span>
-                    </label>
+        <div class="step" id="step3">
+            <div class="card">
+                <h2>Mapeamento e Inventário</h2>
+                <p>Avaliação do mapeamento de dados conforme Art. 37 da LGPD.</p>
+                
+                <div class="question">
+                    <h3>6. A empresa possui inventário completo dos dados pessoais tratados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q6" value="4"> Inventário completo e atualizado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="3"> Inventário adequado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="2"> Inventário básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="1"> Inventário parcial
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="0"> Não possui inventário
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>7. Há mapeamento dos fluxos de dados entre sistemas e departamentos?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q7" value="4">
-                        <span>Mapeamento completo com diagramas atualizados</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q7" value="3">
-                        <span>Mapeamento básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q7" value="2">
-                        <span>Mapeamento em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q7" value="1">
-                        <span>Não há mapeamento de fluxos</span>
-                    </label>
+                <div class="question">
+                    <h3>7. Há mapeamento dos fluxos de dados na organização?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q7" value="4"> Mapeamento completo e documentado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="3"> Mapeamento adequado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="2"> Mapeamento básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="1"> Mapeamento parcial
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="0"> Não há mapeamento
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>8. A empresa identifica e classifica dados sensíveis conforme Art. 11 da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q8" value="4">
-                        <span>Classificação completa com controles específicos</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q8" value="3">
-                        <span>Classificação básica implementada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q8" value="2">
-                        <span>Em processo de classificação</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q8" value="1">
-                        <span>Não classifica dados sensíveis</span>
-                    </label>
+                <div class="question">
+                    <h3>8. A empresa identifica e classifica dados sensíveis?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q8" value="4"> Classificação completa e estruturada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="3"> Classificação adequada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="2"> Classificação básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="1"> Identificação parcial
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="0"> Não identifica dados sensíveis
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>9. Existe registro das atividades de tratamento de dados?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q9" value="4">
-                        <span>Registro completo e atualizado regularmente</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q9" value="3">
-                        <span>Registro básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q9" value="2">
-                        <span>Em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q9" value="1">
-                        <span>Não possui registro</span>
-                    </label>
+                <div class="question">
+                    <h3>9. Há documentação das atividades de tratamento?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q9" value="4"> Documentação completa e atualizada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="3"> Documentação adequada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="2"> Documentação básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="1"> Documentação parcial
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="0"> Não há documentação
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>10. A empresa conhece todos os terceiros que têm acesso aos dados pessoais?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q10" value="4">
-                        <span>Controle completo com contratos adequados</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q10" value="3">
-                        <span>Controle parcial implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q10" value="2">
-                        <span>Em processo de mapeamento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q10" value="1">
-                        <span>Não há controle de terceiros</span>
-                    </label>
+                <div class="question">
+                    <h3>10. A empresa monitora o ciclo de vida dos dados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q10" value="4"> Monitoramento completo e automatizado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="3"> Monitoramento estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="2"> Controle básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="1"> Controle parcial
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="0"> Não monitora
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Próximo </button>
+                </div>
             </div>
         </div>
 
         <!-- Etapa 4: Bases Legais e Finalidades -->
-        <div id="step4" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Bases Legais e Finalidades</h2>
-            
-            <div class="question">
-                <h3>11. A empresa identifica e documenta as bases legais para cada tratamento conforme Art. 7º da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q11" value="4">
-                        <span>Bases legais documentadas para todos os tratamentos</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q11" value="3">
-                        <span>Bases legais identificadas para tratamentos principais</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q11" value="2">
-                        <span>Em processo de identificação</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q11" value="1">
-                        <span>Não identifica bases legais</span>
-                    </label>
+        <div class="step" id="step4">
+            <div class="card">
+                <h2>Bases Legais e Finalidades</h2>
+                <p>Avaliação das bases legais conforme Art. 7º e 11º da LGPD.</p>
+                
+                <div class="question">
+                    <h3>11. A empresa identifica bases legais para cada tratamento?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q11" value="4"> Identificação completa e documentada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="3"> Identificação adequada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="2"> Identificação básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="1"> Identificação parcial
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="0"> Não identifica bases legais
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>12. As finalidades do tratamento são específicas, explícitas e legítimas?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q12" value="4">
-                        <span>Finalidades claras e documentadas para todos os tratamentos</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q12" value="3">
-                        <span>Finalidades definidas para tratamentos principais</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q12" value="2">
-                        <span>Finalidades em processo de definição</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q12" value="1">
-                        <span>Finalidades não definidas claramente</span>
-                    </label>
+                <div class="question">
+                    <h3>12. As finalidades do tratamento são específicas e explícitas?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q12" value="4"> Finalidades claras e específicas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="3"> Finalidades adequadamente definidas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="2"> Finalidades básicas definidas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="1"> Finalidades genéricas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="0"> Finalidades não definidas
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>13. A empresa obtém consentimento adequado quando necessário conforme Art. 8º da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q13" value="4">
-                        <span>Processo de consentimento completo e documentado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q13" value="3">
-                        <span>Processo básico de consentimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q13" value="2">
-                        <span>Em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q13" value="1">
-                        <span>Não possui processo de consentimento</span>
-                    </label>
+                <div class="question">
+                    <h3>13. A empresa obtém consentimento quando necessário?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q13" value="4"> Processo estruturado de consentimento
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="3"> Consentimento adequado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="2"> Consentimento básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="1"> Consentimento informal
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="0"> Não obtém consentimento
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>14. Há controles para evitar tratamento excessivo ou desnecessário?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q14" value="4">
-                        <span>Controles rigorosos de minimização implementados</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q14" value="3">
-                        <span>Controles básicos implementados</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q14" value="2">
-                        <span>Em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q14" value="1">
-                        <span>Não há controles de minimização</span>
-                    </label>
+                <div class="question">
+                    <h3>14. Há controle sobre o uso de dados para finalidades secundárias?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q14" value="4"> Controle rigoroso e documentado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="3"> Controle adequado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="2"> Controle básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="1"> Controle limitado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="0"> Não há controle
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>15. A empresa revisa regularmente a adequação das bases legais?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q15" value="4">
-                        <span>Revisão regular com processo estruturado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q15" value="3">
-                        <span>Revisão ocasional</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q15" value="2">
-                        <span>Revisão em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q15" value="1">
-                        <span>Não há revisão das bases legais</span>
-                    </label>
+                <div class="question">
+                    <h3>15. A empresa revisa regularmente as bases legais utilizadas?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q15" value="4"> Revisão regular e estruturada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q15" value="3"> Revisão periódica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q15" value="2"> Revisão básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q15" value="1"> Revisão esporádica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q15" value="0"> Não revisa
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Próximo </button>
+                </div>
             </div>
         </div>
 
         <!-- Etapa 5: Direitos dos Titulares -->
-        <div id="step5" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Direitos dos Titulares</h2>
-            
-            <div class="question">
-                <h3>16. A empresa possui processo para atender aos direitos dos titulares conforme Art. 18 da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q16" value="4">
-                        <span>Processo completo e automatizado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q16" value="3">
-                        <span>Processo básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q16" value="2">
-                        <span>Em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q16" value="1">
-                        <span>Não possui processo</span>
-                    </label>
+        <div class="step" id="step5">
+            <div class="card">
+                <h2>Direitos dos Titulares</h2>
+                <p>Avaliação do atendimento aos direitos conforme Art. 18 da LGPD.</p>
+                
+                <div class="question">
+                    <h3>16. A empresa possui canal para exercício de direitos dos titulares?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q16" value="4"> Canal dedicado e eficiente
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q16" value="3"> Canal estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q16" value="2"> Canal básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q16" value="1"> Canal informal
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q16" value="0"> Não possui canal
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>17. Há canal específico para solicitações relacionadas à proteção de dados?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q17" value="4">
-                        <span>Canal dedicado e bem divulgado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q17" value="3">
-                        <span>Canal básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q17" value="2">
-                        <span>Em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q17" value="1">
-                        <span>Não possui canal específico</span>
-                    </label>
+                <div class="question">
+                    <h3>17. Há processo para atender solicitações de acesso aos dados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q17" value="4"> Processo automatizado e eficiente
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q17" value="3"> Processo estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q17" value="2"> Processo básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q17" value="1"> Processo manual
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q17" value="0"> Não há processo
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>18. A empresa atende às solicitações dentro do prazo legal de 15 dias?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q18" value="4">
-                        <span>Sempre atende dentro do prazo</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q18" value="3">
-                        <span>Geralmente atende dentro do prazo</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q18" value="2">
-                        <span>Às vezes excede o prazo</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q18" value="1">
-                        <span>Frequentemente excede o prazo</span>
-                    </label>
+                <div class="question">
+                    <h3>18. A empresa atende solicitações de correção de dados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q18" value="4"> Processo ágil e estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q18" value="3"> Processo adequado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q18" value="2"> Processo básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q18" value="1"> Atendimento limitado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q18" value="0"> Não atende
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>19. Existe processo para portabilidade de dados quando aplicável?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q19" value="4">
-                        <span>Processo automatizado de portabilidade</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q19" value="3">
-                        <span>Processo manual implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q19" value="2">
-                        <span>Em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q19" value="1">
-                        <span>Não possui processo de portabilidade</span>
-                    </label>
+                <div class="question">
+                    <h3>19. Há processo para exclusão de dados (direito ao esquecimento)?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q19" value="4"> Processo completo e automatizado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q19" value="3"> Processo estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q19" value="2"> Processo básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q19" value="1"> Processo manual
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q19" value="0"> Não há processo
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>20. A empresa registra e monitora as solicitações dos titulares?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q20" value="4">
-                        <span>Sistema completo de registro e monitoramento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q20" value="3">
-                        <span>Registro básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q20" value="2">
-                        <span>Em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q20" value="1">
-                        <span>Não registra solicitações</span>
-                    </label>
+                <div class="question">
+                    <h3>20. A empresa atende solicitações de portabilidade de dados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q20" value="4"> Processo automatizado e eficiente
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q20" value="3"> Processo estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q20" value="2"> Processo básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q20" value="1"> Atendimento limitado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q20" value="0"> Não atende
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Próximo </button>
+                </div>
             </div>
         </div>
 
         <!-- Etapa 6: Segurança da Informação -->
-        <div id="step6" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Segurança da Informação</h2>
-            
-            <div class="question">
-                <h3>21. A empresa implementa medidas de segurança técnicas conforme Art. 46 da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q21" value="4">
-                        <span>Medidas robustas e atualizadas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q21" value="3">
-                        <span>Medidas básicas implementadas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q21" value="2">
-                        <span>Em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q21" value="1">
-                        <span>Medidas insuficientes</span>
-                    </label>
+        <div class="step" id="step6">
+            <div class="card">
+                <h2>Segurança da Informação</h2>
+                <p>Avaliação das medidas de segurança conforme Art. 46 da LGPD.</p>
+                
+                <div class="question">
+                    <h3>21. A empresa implementa medidas técnicas de segurança adequadas?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q21" value="4"> Medidas avançadas e atualizadas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q21" value="3"> Medidas adequadas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q21" value="2"> Medidas básicas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q21" value="1"> Medidas limitadas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q21" value="0"> Medidas insuficientes
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>22. Há criptografia adequada para dados pessoais sensíveis?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q22" value="4">
-                        <span>Criptografia robusta em repouso e trânsito</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q22" value="3">
-                        <span>Criptografia básica implementada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q22" value="2">
-                        <span>Criptografia parcial</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q22" value="1">
-                        <span>Sem criptografia adequada</span>
-                    </label>
+                <div class="question">
+                    <h3>22. Há controles de acesso aos dados pessoais?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q22" value="4"> Controles rigorosos e granulares
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q22" value="3"> Controles adequados
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q22" value="2"> Controles básicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q22" value="1"> Controles limitados
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q22" value="0"> Sem controles
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>23. Existe controle de acesso baseado em necessidade e função?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q23" value="4">
-                        <span>Controle rigoroso com revisões regulares</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q23" value="3">
-                        <span>Controle básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q23" value="2">
-                        <span>Controle limitado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q23" value="1">
-                        <span>Sem controle adequado</span>
-                    </label>
+                <div class="question">
+                    <h3>23. A empresa utiliza criptografia para proteção de dados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q23" value="4"> Criptografia avançada e abrangente
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q23" value="3"> Criptografia adequada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q23" value="2"> Criptografia básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q23" value="1"> Criptografia limitada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q23" value="0"> Não utiliza criptografia
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>24. A empresa realiza backups seguros e testa a recuperação?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q24" value="4">
-                        <span>Backups seguros com testes regulares</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q24" value="3">
-                        <span>Backups básicos implementados</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q24" value="2">
-                        <span>Backups sem testes regulares</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q24" value="1">
-                        <span>Backups inadequados ou inexistentes</span>
-                    </label>
+                <div class="question">
+                    <h3>24. Há monitoramento de segurança e detecção de incidentes?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q24" value="4"> Monitoramento 24/7 automatizado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q24" value="3"> Monitoramento estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q24" value="2"> Monitoramento básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q24" value="1"> Monitoramento limitado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q24" value="0"> Não há monitoramento
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>25. Há monitoramento de segurança e detecção de anomalias?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q25" value="4">
-                        <span>Monitoramento 24/7 com alertas automáticos</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q25" value="3">
-                        <span>Monitoramento básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q25" value="2">
-                        <span>Monitoramento limitado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q25" value="1">
-                        <span>Sem monitoramento adequado</span>
-                    </label>
+                <div class="question">
+                    <h3>25. A empresa realiza backups seguros dos dados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q25" value="4"> Backup automatizado e criptografado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q25" value="3"> Backup estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q25" value="2"> Backup básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q25" value="1"> Backup esporádico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q25" value="0"> Não realiza backup
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Próximo </button>
+                </div>
             </div>
         </div>
 
         <!-- Etapa 7: Gestão de Terceiros -->
-        <div id="step7" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Gestão de Terceiros</h2>
-            
-            <div class="question">
-                <h3>26. A empresa possui contratos adequados com operadores conforme Art. 42 da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q26" value="4">
-                        <span>Contratos completos com cláusulas específicas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q26" value="3">
-                        <span>Contratos básicos implementados</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q26" value="2">
-                        <span>Contratos em revisão</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q26" value="1">
-                        <span>Contratos inadequados ou inexistentes</span>
-                    </label>
+        <div class="step" id="step7">
+            <div class="card">
+                <h2>Gestão de Terceiros</h2>
+                <p>Avaliação da gestão de operadores conforme Art. 42 da LGPD.</p>
+                
+                <div class="question">
+                    <h3>26. A empresa possui contratos adequados com operadores?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q26" value="4"> Contratos completos e específicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q26" value="3"> Contratos adequados
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q26" value="2"> Contratos básicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q26" value="1"> Contratos genéricos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q26" value="0"> Não possui contratos específicos
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>27. Há processo de due diligence para fornecedores que tratam dados?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q27" value="4">
-                        <span>Due diligence rigorosa e documentada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q27" value="3">
-                        <span>Processo básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q27" value="2">
-                        <span>Processo limitado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q27" value="1">
-                        <span>Sem processo de due diligence</span>
-                    </label>
+                <div class="question">
+                    <h3>27. Há due diligence de fornecedores em relação à LGPD?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q27" value="4"> Due diligence rigorosa e estruturada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q27" value="3"> Due diligence adequada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q27" value="2"> Verificação básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q27" value="1"> Verificação limitada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q27" value="0"> Não realiza due diligence
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>28. A empresa monitora o cumprimento da LGPD por terceiros?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q28" value="4">
-                        <span>Monitoramento regular com auditorias</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q28" value="3">
-                        <span>Monitoramento básico</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q28" value="2">
-                        <span>Monitoramento limitado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q28" value="1">
-                        <span>Sem monitoramento</span>
-                    </label>
+                <div class="question">
+                    <h3>28. A empresa monitora a conformidade de terceiros?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q28" value="4"> Monitoramento contínuo e estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q28" value="3"> Monitoramento periódico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q28" value="2"> Verificação básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q28" value="1"> Verificação esporádica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q28" value="0"> Não monitora
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>29. Existe processo para transferência internacional de dados quando aplicável?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q29" value="4">
-                        <span>Processo completo com salvaguardas adequadas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q29" value="3">
-                        <span>Processo básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q29" value="2">
-                        <span>Processo em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q29" value="1">
-                        <span>Não aplicável ou sem processo</span>
-                    </label>
+                <div class="question">
+                    <h3>29. Há processo para gestão de suboperadores?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q29" value="4"> Processo completo e documentado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q29" value="3"> Processo estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q29" value="2"> Controle básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q29" value="1"> Controle limitado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q29" value="0"> Não há processo
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="question">
+                    <h3>30. A empresa avalia riscos de transferência internacional?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q30" value="4"> Avaliação rigorosa e documentada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q30" value="3"> Avaliação adequada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q30" value="2"> Avaliação básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q30" value="1"> Avaliação limitada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q30" value="0"> Não avalia
+                        </label>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Próximo </button>
+                </div>
             </div>
         </div>
 
         <!-- Etapa 8: Gestão de Incidentes -->
-        <div id="step8" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Gestão de Incidentes</h2>
-            
-            <div class="question">
-                <h3>30. A empresa possui plano de resposta a incidentes de segurança conforme Art. 48 da LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q30" value="4">
-                        <span>Plano completo testado regularmente</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q30" value="3">
-                        <span>Plano básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q30" value="2">
-                        <span>Plano em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q30" value="1">
-                        <span>Não possui plano</span>
-                    </label>
+        <div class="step" id="step8">
+            <div class="card">
+                <h2>Gestão de Incidentes</h2>
+                <p>Avaliação da gestão de incidentes conforme Art. 48 da LGPD.</p>
+                
+                <div class="question">
+                    <h3>31. A empresa possui plano de resposta a incidentes?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q31" value="4"> Plano completo e testado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q31" value="3"> Plano estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q31" value="2"> Plano básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q31" value="1"> Procedimentos informais
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q31" value="0"> Não possui plano
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>31. Há processo para notificação à ANPD em caso de incidentes?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q31" value="4">
-                        <span>Processo claro com prazos definidos</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q31" value="3">
-                        <span>Processo básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q31" value="2">
-                        <span>Processo em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q31" value="1">
-                        <span>Não possui processo</span>
-                    </label>
+                <div class="question">
+                    <h3>32. Há processo para notificação de incidentes à ANPD?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q32" value="4"> Processo automatizado e ágil
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q32" value="3"> Processo estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q32" value="2"> Processo básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q32" value="1"> Processo informal
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q32" value="0"> Não há processo
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>32. A empresa possui processo para comunicação aos titulares em caso de incidentes?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q32" value="4">
-                        <span>Processo estruturado com templates</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q32" value="3">
-                        <span>Processo básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q32" value="2">
-                        <span>Processo em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q32" value="1">
-                        <span>Não possui processo</span>
-                    </label>
+                <div class="question">
+                    <h3>33. A empresa comunica incidentes aos titulares quando necessário?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q33" value="4"> Comunicação proativa e transparente
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q33" value="3"> Comunicação adequada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q33" value="2"> Comunicação básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q33" value="1"> Comunicação limitada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q33" value="0"> Não comunica
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>33. Há registro e análise de incidentes para melhoria contínua?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q33" value="4">
-                        <span>Registro completo com análise de causa raiz</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q33" value="3">
-                        <span>Registro básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q33" value="2">
-                        <span>Registro limitado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q33" value="1">
-                        <span>Não registra incidentes</span>
-                    </label>
+                <div class="question">
+                    <h3>34. Há registro e análise de incidentes de segurança?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q34" value="4"> Registro completo e análise detalhada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q34" value="3"> Registro estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q34" value="2"> Registro básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q34" value="1"> Registro informal
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q34" value="0"> Não registra
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="question">
+                    <h3>35. A empresa realiza testes de resposta a incidentes?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q35" value="4"> Testes regulares e simulações
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q35" value="3"> Testes periódicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q35" value="2"> Testes básicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q35" value="1"> Testes esporádicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q35" value="0"> Não realiza testes
+                        </label>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Próximo </button>
+                </div>
             </div>
         </div>
 
-        <!-- Etapa 9: Avaliação de Riscos -->
-        <div id="step9" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Avaliação de Riscos</h2>
-            
-            <div class="question">
-                <h3>34. A empresa realiza avaliação de impacto à proteção de dados (DPIA) quando necessário?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q34" value="4">
-                        <span>DPIA estruturada para tratamentos de alto risco</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q34" value="3">
-                        <span>DPIA básica implementada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q34" value="2">
-                        <span>DPIA em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q34" value="1">
-                        <span>Não realiza DPIA</span>
-                    </label>
+        <!-- Etapa 9: Monitoramento e Auditoria -->
+        <div class="step" id="step9">
+            <div class="card">
+                <h2>Monitoramento e Auditoria</h2>
+                <p>Avaliação do monitoramento contínuo conforme Art. 50 da LGPD.</p>
+                
+                <div class="question">
+                    <h3>36. A empresa possui indicadores de conformidade LGPD?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q36" value="4"> KPIs estruturados e monitorados
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q36" value="3"> Indicadores adequados
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q36" value="2"> Indicadores básicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q36" value="1"> Métricas informais
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q36" value="0"> Não possui indicadores
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>35. Há processo para identificação e avaliação de riscos de privacidade?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q35" value="4">
-                        <span>Processo estruturado com metodologia definida</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q35" value="3">
-                        <span>Processo básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q35" value="2">
-                        <span>Processo em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q35" value="1">
-                        <span>Não avalia riscos de privacidade</span>
-                    </label>
+                <div class="question">
+                    <h3>37. Há relatórios regulares sobre conformidade?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q37" value="4"> Relatórios automatizados e detalhados
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q37" value="3"> Relatórios estruturados
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q37" value="2"> Relatórios básicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q37" value="1"> Relatórios esporádicos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q37" value="0"> Não há relatórios
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>36. A empresa implementa medidas para mitigar riscos identificados?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q36" value="4">
-                        <span>Plano estruturado de mitigação</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q36" value="3">
-                        <span>Medidas básicas implementadas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q36" value="2">
-                        <span>Medidas em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q36" value="1">
-                        <span>Não implementa medidas de mitigação</span>
-                    </label>
+                <div class="question">
+                    <h3>38. A empresa realiza avaliações de impacto (DPIA)?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q38" value="4"> DPIA estruturada e regular
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q38" value="3"> DPIA quando necessária
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q38" value="2"> Avaliação básica de riscos
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q38" value="1"> Avaliação informal
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q38" value="0"> Não realiza DPIA
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>37. Há revisão periódica dos riscos e controles de privacidade?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q37" value="4">
-                        <span>Revisão regular com cronograma definido</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q37" value="3">
-                        <span>Revisão ocasional</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q37" value="2">
-                        <span>Revisão limitada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q37" value="1">
-                        <span>Não revisa riscos</span>
-                    </label>
+                <div class="question">
+                    <h3>39. Há processo de melhoria contínua em privacidade?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q39" value="4"> Processo estruturado e ativo
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q39" value="3"> Melhorias periódicas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q39" value="2"> Melhorias pontuais
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q39" value="1"> Melhorias esporádicas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q39" value="0"> Não há processo
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="question">
+                    <h3>40. A empresa monitora mudanças regulatórias?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q40" value="4"> Monitoramento ativo e estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q40" value="3"> Acompanhamento regular
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q40" value="2"> Acompanhamento básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q40" value="1"> Acompanhamento esporádico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q40" value="0"> Não monitora
+                        </label>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Próximo </button>
+                </div>
             </div>
         </div>
 
-        <!-- Etapa 10: Monitoramento e Auditoria -->
-        <div id="step10" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Monitoramento e Auditoria</h2>
-            
-            <div class="question">
-                <h3>38. A empresa realiza auditorias internas de conformidade com a LGPD?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q38" value="4">
-                        <span>Auditorias regulares com metodologia estruturada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q38" value="3">
-                        <span>Auditorias básicas implementadas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q38" value="2">
-                        <span>Auditorias em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q38" value="1">
-                        <span>Não realiza auditorias</span>
-                    </label>
+        <!-- Etapa 10: Transparência e Comunicação -->
+        <div class="step" id="step10">
+            <div class="card">
+                <h2>Transparência e Comunicação</h2>
+                <p>Avaliação da transparência e comunicação conforme Art. 8º e 9º da LGPD.</p>
+                
+                <div class="question">
+                    <h3>41. A política de privacidade é clara e acessível?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q41" value="4"> Política completa, clara e facilmente acessível
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q41" value="3"> Política adequada e acessível
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q41" value="2"> Política básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q41" value="1"> Política genérica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q41" value="0"> Não possui política
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>39. Há indicadores (KPIs) para monitorar a conformidade?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q39" value="4">
-                        <span>KPIs estruturados com monitoramento regular</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q39" value="3">
-                        <span>KPIs básicos implementados</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q39" value="2">
-                        <span>KPIs em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q39" value="1">
-                        <span>Não possui KPIs</span>
-                    </label>
+                <div class="question">
+                    <h3>42. Os titulares são informados sobre o tratamento de seus dados?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q42" value="4"> Informação completa e proativa
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q42" value="3"> Informação adequada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q42" value="2"> Informação básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q42" value="1"> Informação limitada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q42" value="0"> Não há informação
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="question">
-                <h3>40. A empresa possui processo de melhoria contínua baseado em resultados?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q40" value="4">
-                        <span>Processo estruturado de melhoria contínua</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q40" value="3">
-                        <span>Processo básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q40" value="2">
-                        <span>Processo em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q40" value="1">
-                        <span>Não possui processo de melhoria</span>
-                    </label>
+                <div class="question">
+                    <h3>43. Há comunicação sobre mudanças nas práticas de privacidade?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q43" value="4"> Comunicação proativa e detalhada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q43" value="3"> Comunicação adequada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q43" value="2"> Comunicação básica
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q43" value="1"> Comunicação limitada
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q43" value="0"> Não há comunicação
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+                <div class="question">
+                    <h3>44. A empresa mantém canal de comunicação com os titulares?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q44" value="4"> Canal dedicado e eficiente
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q44" value="3"> Canal estruturado
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q44" value="2"> Canal básico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q44" value="1"> Canal informal
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q44" value="0"> Não possui canal
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>45. Há processo para atualização das informações de privacidade?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q45" value="4"> Processo estruturado e regular
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q45" value="3"> Processo periódico
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q45" value="2"> Atualizações pontuais
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q45" value="1"> Atualizações esporádicas
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q45" value="0"> Não há processo
+                        </label>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousStep()"> Anterior</button>
+                    <button class="btn btn-primary" onclick="finishAssessment()">Finalizar Avaliação </button>
+                </div>
             </div>
         </div>
 
-        <!-- Etapa 11: Comunicação e Transparência -->
-        <div id="step11" class="card hidden">
-            <h2 style="margin-bottom: 30px;">Comunicação e Transparência</h2>
-            
-            <div class="question">
-                <h3>41. A política de privacidade é clara, acessível e atualizada?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q41" value="4">
-                        <span>Política completa, clara e facilmente acessível</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q41" value="3">
-                        <span>Política básica implementada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q41" value="2">
-                        <span>Política em desenvolvimento</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q41" value="1">
-                        <span>Política inadequada ou inexistente</span>
-                    </label>
+        <!-- Etapa 11: Resultados -->
+        <div class="step" id="step11">
+            <div class="card">
+                <div class="loading" id="loadingResults">
+                    <div class="spinner"></div>
+                    <p>Processando sua avaliação...</p>
                 </div>
-            </div>
-
-            <div class="question">
-                <h3>42. Os titulares são adequadamente informados sobre o tratamento de seus dados?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q42" value="4">
-                        <span>Informações completas e transparentes</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q42" value="3">
-                        <span>Informações básicas fornecidas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q42" value="2">
-                        <span>Informações limitadas</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q42" value="1">
-                        <span>Informações inadequadas</span>
-                    </label>
+                
+                <div class="results" id="resultsContent" style="display: none;">
+                    <h2>Diagnóstico de Conformidade LGPD</h2>
+                    <div class="score" id="scoreDisplay">0%</div>
+                    <div class="classification" id="classificationDisplay">Processando...</div>
+                    
+                    <div class="recommendations" id="recommendationsDisplay">
+                        <!-- Recomendações serão inseridas aqui -->
+                    </div>
                 </div>
-            </div>
-
-            <div class="question">
-                <h3>43. Há comunicação proativa sobre mudanças nas práticas de privacidade?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q43" value="4">
-                        <span>Comunicação estruturada e proativa</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q43" value="3">
-                        <span>Comunicação básica implementada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q43" value="2">
-                        <span>Comunicação limitada</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q43" value="1">
-                        <span>Não comunica mudanças</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="question">
-                <h3>44. A empresa mantém canal de comunicação acessível com os titulares?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q44" value="4">
-                        <span>Múltiplos canais acessíveis e responsivos</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q44" value="3">
-                        <span>Canal básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q44" value="2">
-                        <span>Canal limitado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q44" value="1">
-                        <span>Canal inadequado ou inexistente</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="question">
-                <h3>45. Existe processo para manter as informações de privacidade atualizadas?</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q45" value="4">
-                        <span>Processo estruturado de atualização</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q45" value="3">
-                        <span>Processo básico implementado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q45" value="2">
-                        <span>Processo limitado</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q45" value="1">
-                        <span>Não possui processo de atualização</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="navigation">
-                <button class="btn btn-secondary" onclick="previousStep()">← Anterior</button>
-                <button class="btn btn-primary" onclick="finishAssessment()">Finalizar Avaliação</button>
-            </div>
-        </div>
-
-        <!-- Etapa 12: Resultados -->
-        <div id="step12" class="card hidden">
-            <div class="results">
-                <h2 style="margin-bottom: 30px;">Diagnóstico de Conformidade LGPD</h2>
-                <div id="resultsContainer"></div>
             </div>
         </div>
     </div>
 
     <script>
         let currentStep = 0;
-        const totalSteps = 12;
+        const totalSteps = 11;
+        let responses = {};
+        let companyData = {};
+
         const stepTitles = [
             'Introdução',
             'Informações da Empresa',
@@ -1690,361 +1638,328 @@
             'Segurança da Informação',
             'Gestão de Terceiros',
             'Gestão de Incidentes',
-            'Avaliação de Riscos',
             'Monitoramento e Auditoria',
-            'Comunicação e Transparência',
-            'Resultados'
+            'Transparência e Comunicação'
         ];
+
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('stepIndicator').textContent = stepTitles[currentStep];
+        }
 
         function showStep(step) {
             // Esconder todas as etapas
-            for (let i = 0; i <= totalSteps; i++) {
-                const stepElement = document.getElementById(`step${i}`);
-                if (stepElement) {
-                    stepElement.classList.add('hidden');
-                }
-            }
-
+            const steps = document.querySelectorAll('.step');
+            steps.forEach(s => s.classList.remove('active'));
+            
             // Mostrar etapa atual
-            const currentStepElement = document.getElementById(`step${step}`);
+            const currentStepElement = document.getElementById('step' + step);
             if (currentStepElement) {
-                currentStepElement.classList.remove('hidden');
+                currentStepElement.classList.add('active');
             }
+            
+            updateProgress();
+        }
 
-            // Atualizar título
-            document.getElementById('stepTitle').textContent = stepTitles[step];
+        function validateStep() {
+            if (currentStep === 1) {
+                // Validar informações da empresa
+                const companyName = document.getElementById('companyName').value.trim();
+                const sector = document.getElementById('sector').value;
+                const employees = document.getElementById('employees').value;
+                const email = document.getElementById('email').value.trim();
 
-            // Atualizar barra de progresso
-            const progress = (step / totalSteps) * 100;
-            document.getElementById('progressFill').style.width = `${progress}%`;
+                let isValid = true;
 
-            currentStep = step;
+                if (!companyName) {
+                    document.getElementById('companyNameError').textContent = 'Nome da empresa é obrigatório';
+                    isValid = false;
+                } else {
+                    document.getElementById('companyNameError').textContent = '';
+                }
+
+                if (!sector) {
+                    document.getElementById('sectorError').textContent = 'Setor de atuação é obrigatório';
+                    isValid = false;
+                } else {
+                    document.getElementById('sectorError').textContent = '';
+                }
+
+                if (!employees) {
+                    document.getElementById('employeesError').textContent = 'Número de funcionários é obrigatório';
+                    isValid = false;
+                } else {
+                    document.getElementById('employeesError').textContent = '';
+                }
+
+                if (!email || !email.includes('@')) {
+                    document.getElementById('emailError').textContent = 'E-mail válido é obrigatório';
+                    isValid = false;
+                } else {
+                    document.getElementById('emailError').textContent = '';
+                }
+
+                if (isValid) {
+                    companyData = {
+                        name: companyName,
+                        sector: sector,
+                        employees: employees,
+                        email: email
+                    };
+                }
+
+                return isValid;
+            } else if (currentStep >= 2 && currentStep <= 10) {
+                // Validar perguntas da etapa atual
+                const questions = document.querySelectorAll(`#step${currentStep} input[type="radio"]`);
+                const questionNames = new Set();
+                questions.forEach(q => questionNames.add(q.name));
+                
+                for (let questionName of questionNames) {
+                    const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+                    if (!selected) {
+                        alert('Por favor, responda todas as perguntas antes de continuar.');
+                        return false;
+                    }
+                    responses[questionName] = parseInt(selected.value);
+                }
+                return true;
+            }
+            return true;
         }
 
         function nextStep() {
-            if (currentStep === 1) {
-                // Validar campos obrigatórios
-                const companyName = document.getElementById('companyName').value;
-                const sector = document.getElementById('sector').value;
-                const employees = document.getElementById('employees').value;
-                const email = document.getElementById('email').value;
-
-                if (!companyName || !sector || !employees || !email) {
-                    alert('Por favor, preencha todos os campos obrigatórios.');
-                    return;
+            if (validateStep()) {
+                if (currentStep < totalSteps - 1) {
+                    currentStep++;
+                    showStep(currentStep);
                 }
-
-                // Enviar dados para Google Sheets
-                sendToGoogleSheets({
-                    companyName,
-                    sector,
-                    employees,
-                    email,
-                    timestamp: new Date().toISOString()
-                });
-            }
-
-            if (currentStep < totalSteps) {
-                showStep(currentStep + 1);
             }
         }
 
         function previousStep() {
             if (currentStep > 0) {
-                showStep(currentStep - 1);
+                currentStep--;
+                showStep(currentStep);
             }
         }
 
         function finishAssessment() {
-            calculateResults();
-            showStep(12);
-        }
-
-        function sendToGoogleSheets(data) {
-            // Substitua pela URL do seu Google Apps Script
-            const scriptURL = https://script.google.com/macros/s/AKfycbxkkdNZe2KbMDNYfU5-69v8M-TiiQE1ZeyKb1ltj2vWnGeDqxmg0IbUY0WsOrDdh8Q7Jw/exec;
-            
-            fetch(scriptURL, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Dados enviados com sucesso:', data);
-            })
-            .catch(error => {
-                console.error('Erro ao enviar dados:', error);
-            });
+            if (validateStep()) {
+                currentStep = 11;
+                showStep(currentStep);
+                
+                // Mostrar loading
+                document.getElementById('loadingResults').style.display = 'block';
+                document.getElementById('resultsContent').style.display = 'none';
+                
+                // Simular processamento
+                setTimeout(() => {
+                    calculateResults();
+                    sendToGoogleSheets();
+                }, 2000);
+            }
         }
 
         function calculateResults() {
+            const totalQuestions = 45;
+            const maxScore = totalQuestions * 4;
             let totalScore = 0;
-            let answeredQuestions = 0;
 
-            // Calcular pontuação
-            for (let i = 1; i <= 45; i++) {
-                const question = document.querySelector(`input[name="q${i}"]:checked`);
-                if (question) {
-                    totalScore += parseInt(question.value);
-                    answeredQuestions++;
+            // Calcular pontuação total
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionKey = 'q' + i;
+                if (responses[questionKey] !== undefined) {
+                    totalScore += responses[questionKey];
                 }
             }
 
-            const maxScore = answeredQuestions * 4;
             const percentage = Math.round((totalScore / maxScore) * 100);
-
-            // Determinar classificação
-            let classification, classificationClass;
+            
+            // Determinar classificação e recomendações
+            let classification, classificationClass, recommendations;
+            
             if (percentage >= 85) {
-                classification = 'Excelente';
+                classification = 'Conformidade Excelente';
                 classificationClass = 'excellent';
+                recommendations = getExcellentRecommendations();
             } else if (percentage >= 70) {
-                classification = 'Adequada';
+                classification = 'Conformidade Adequada';
                 classificationClass = 'good';
+                recommendations = getGoodRecommendations();
             } else if (percentage >= 40) {
-                classification = 'Parcial';
+                classification = 'Conformidade Parcial';
                 classificationClass = 'partial';
+                recommendations = getPartialRecommendations();
             } else {
-                classification = 'Crítica';
+                classification = 'Situação Crítica';
                 classificationClass = 'critical';
-            }
-
-            // Obter dados da empresa
-            const companyName = document.getElementById('companyName').value;
-            const sector = document.getElementById('sector').value;
-            const employees = document.getElementById('employees').value;
-
-            // Determinar porte da empresa
-            let companySize;
-            switch(employees) {
-                case '1-10': companySize = 'Microempresa'; break;
-                case '11-50': companySize = 'Pequena Empresa'; break;
-                case '51-200': companySize = 'Média Empresa'; break;
-                case '201-500': companySize = 'Grande Empresa'; break;
-                case '500+': companySize = 'Corporação'; break;
-                default: companySize = 'Não informado';
+                recommendations = getCriticalRecommendations();
             }
 
             // Exibir resultados
-            displayResults(percentage, classification, classificationClass, sector, companySize);
+            document.getElementById('scoreDisplay').textContent = percentage + '%';
+            document.getElementById('classificationDisplay').textContent = classification;
+            document.getElementById('classificationDisplay').className = 'classification ' + classificationClass;
+            document.getElementById('recommendationsDisplay').innerHTML = recommendations;
+            
+            // Esconder loading e mostrar resultados
+            document.getElementById('loadingResults').style.display = 'none';
+            document.getElementById('resultsContent').style.display = 'block';
         }
 
-        function displayResults(percentage, classification, classificationClass, sector, companySize) {
-            const container = document.getElementById('resultsContainer');
-            
-            let recommendations = `
-                <div class="score">${percentage}%</div>
-                <div class="classification ${classificationClass}">Conformidade ${classification}</div>
+        function getExcellentRecommendations() {
+            return `
+                <div class="recommendation">
+                    <div class="priority low">Prioridade Baixa</div>
+                    <h4>Programa de Melhoria Contínua</h4>
+                    <p>Implementar metodologia PDCA (Plan-Do-Check-Act) para manutenção da excelência em conformidade LGPD. Estabelecer KPIs específicos para monitoramento proativo de mudanças regulatórias e evolução das melhores práticas internacionais.</p>
+                    <p><strong>Referência Legal:</strong> Art. 50 da LGPD - Programa de Governança em Privacidade</p>
+                    <p><strong>Prazo:</strong> 90 dias para implementação completa</p>
+                </div>
                 
-                <div style="margin-bottom: 30px; padding: 20px; background: #f0f8ff; border-radius: 10px; border-left: 5px solid #667eea;">
-                    <h4 style="color: #667eea; margin-bottom: 15px;">📊 Perfil da Avaliação</h4>
-                    <p><strong>Setor:</strong> ${sector} | <strong>Porte:</strong> ${companySize} | <strong>Nível de Maturidade:</strong> ${classification}</p>
-                    <p style="font-size: 0.9rem; color: #666;">Recomendações personalizadas baseadas no seu perfil específico</p>
+                <div class="recommendation">
+                    <div class="priority low">Prioridade Baixa</div>
+                    <h4>Monitoramento Proativo de Mudanças Regulatórias</h4>
+                    <p>Estabelecer sistema de acompanhamento contínuo das diretrizes da ANPD e jurisprudência emergente. Implementar processo de avaliação trimestral de impacto de novas regulamentações nos procedimentos internos.</p>
+                    <p><strong>Referência Legal:</strong> Regulamentações da ANPD e Lei 13.709/2018</p>
+                    <p><strong>Prazo:</strong> 60 dias para estruturação</p>
+                </div>
+                
+                <div class="recommendation">
+                    <div class="priority low">Prioridade Baixa</div>
+                    <h4>Capacitação Avançada por Função e Hierarquia</h4>
+                    <p>Desenvolver programa de capacitação diferenciado por função organizacional, incluindo módulos específicos para liderança, operações e áreas técnicas. Implementar certificação interna em proteção de dados.</p>
+                    <p><strong>Metodologia:</strong> Framework de competências baseado em Privacy by Design</p>
+                    <p><strong>Prazo:</strong> 120 dias para implementação completa</p>
                 </div>
             `;
+        }
 
-            if (classification === 'Excelente') {
-                recommendations += `
-                    <div class="recommendation">
-                        <span class="priority low">Prioridade Baixa</span>
-                        <h4>Programa de Melhoria Contínua para ${sector}</h4>
-                        <p>Para empresas do setor ${sector} com ${companySize.toLowerCase()}, implementar metodologia PDCA (Plan-Do-Check-Act) específica para os riscos setoriais. ${getSectorSpecificAdvice(sector, 'excellent')}</p>
-                        <p><strong>Prazo:</strong> 90 dias | <strong>Responsável:</strong> DPO/Comitê de Governança</p>
-                    </div>
-                    <div class="recommendation">
-                        <span class="priority low">Prioridade Baixa</span>
-                        <h4>Monitoramento Proativo Setorial</h4>
-                        <p>Estabelecer processo de acompanhamento das regulamentações específicas do setor ${sector}. ${getCompanySizeAdvice(companySize, 'monitoring')}</p>
-                        <p><strong>Prazo:</strong> 60 dias | <strong>Responsável:</strong> Área Jurídica/Compliance</p>
-                    </div>
-                `;
-            } else if (classification === 'Adequada') {
-                recommendations += `
-                    <div class="recommendation">
-                        <span class="priority medium">Prioridade Média</span>
-                        <h4>Fortalecimento Específico para ${sector}</h4>
-                        <p>Análise de risco detalhada considerando as particularidades do setor ${sector}. ${getSectorSpecificAdvice(sector, 'adequate')} ${getCompanySizeAdvice(companySize, 'strengthening')}</p>
-                        <p><strong>Prazo:</strong> 120 dias | <strong>Responsável:</strong> DPO + Área de Segurança</p>
-                    </div>
-                    <div class="recommendation">
-                        <span class="priority medium">Prioridade Média</span>
-                        <h4>Documentação Adaptada ao Porte</h4>
-                        <p>Completar registro de atividades conforme Art. 37 da LGPD, adaptado para ${companySize.toLowerCase()}. ${getCompanySizeAdvice(companySize, 'documentation')}</p>
-                        <p><strong>Prazo:</strong> 90 dias | <strong>Responsável:</strong> DPO + Áreas de Negócio</p>
-                    </div>
-                `;
-            } else if (classification === 'Parcial') {
-                recommendations += `
-                    <div class="recommendation">
-                        <span class="priority high">Prioridade Alta</span>
-                        <h4>Programa Estruturado para ${sector}</h4>
-                        <p>Implementar programa específico para ${companySize.toLowerCase()} do setor ${sector}. ${getSectorSpecificAdvice(sector, 'partial')} ${getCompanySizeAdvice(companySize, 'structured')}</p>
-                        <p><strong>Prazo:</strong> 30 dias para início | <strong>Responsável:</strong> Alta Direção + DPO</p>
-                    </div>
-                    <div class="recommendation">
-                        <span class="priority high">Prioridade Alta</span>
-                        <h4>Políticas Setoriais Fundamentais</h4>
-                        <p>Desenvolver políticas específicas para ${sector}: ${getSectorPolicies(sector)} ${getCompanySizeAdvice(companySize, 'policies')}</p>
-                        <p><strong>Prazo:</strong> 90 dias | <strong>Responsável:</strong> Área Jurídica + TI</p>
-                    </div>
-                `;
-            } else {
-                recommendations += `
-                    <div class="recommendation">
-                        <span class="priority high">Prioridade Crítica</span>
-                        <h4>Ação Emergencial para ${sector}</h4>
-                        <p>Medidas emergenciais específicas para ${companySize.toLowerCase()} do setor ${sector}. ${getSectorSpecificAdvice(sector, 'critical')} ${getCompanySizeAdvice(companySize, 'emergency')}</p>
-                        <p><strong>Prazo:</strong> 24-48 horas | <strong>Responsável:</strong> Alta Direção</p>
-                    </div>
-                    <div class="recommendation">
-                        <span class="priority high">Prioridade Crítica</span>
-                        <h4>Consultoria Especializada Setorial</h4>
-                        <p>Contratar consultoria com expertise em ${sector} para ${companySize.toLowerCase()}. ${getCompanySizeAdvice(companySize, 'consulting')}</p>
-                        <p><strong>Prazo:</strong> 7 dias | <strong>Responsável:</strong> Alta Direção</p>
-                    </div>
-                `;
+        function getGoodRecommendations() {
+            return `
+                <div class="recommendation">
+                    <div class="priority medium">Prioridade Média</div>
+                    <h4>Fortalecimento Sistemático Baseado em Análise de Risco</h4>
+                    <p>Implementar metodologia PDCA para identificação e mitigação de gaps específicos. Realizar análise de risco detalhada das atividades de tratamento com foco nas áreas de menor pontuação na avaliação.</p>
+                    <p><strong>Referência Legal:</strong> Art. 46 da LGPD - Medidas de Segurança Técnicas e Administrativas</p>
+                    <p><strong>Prazo:</strong> 90 dias para análise e 120 dias para implementação</p>
+                </div>
+                
+                <div class="recommendation">
+                    <div class="priority medium">Prioridade Média</div>
+                    <h4>Documentação Completa de Atividades de Tratamento</h4>
+                    <p>Estruturar registro detalhado conforme Art. 37 da LGPD, incluindo finalidades específicas, bases legais, categorias de dados, compartilhamentos e prazos de retenção. Implementar processo de revisão semestral da documentação.</p>
+                    <p><strong>Referência Legal:</strong> Art. 37 da LGPD - Registro das Atividades de Tratamento</p>
+                    <p><strong>Prazo:</strong> 60 dias para documentação inicial</p>
+                </div>
+                
+                <div class="recommendation">
+                    <div class="priority medium">Prioridade Média</div>
+                    <h4>Capacitação Específica por Área de Deficiência</h4>
+                    <p>Desenvolver programa de treinamento direcionado às áreas identificadas com menor conformidade. Implementar avaliação de eficácia dos treinamentos e programa de reciclagem trimestral.</p>
+                    <p><strong>Metodologia:</strong> Abordagem setorial baseada em contexto de negócio</p>
+                    <p><strong>Prazo:</strong> 45 dias para início do programa</p>
+                </div>
+            `;
+        }
+
+        function getPartialRecommendations() {
+            return `
+                <div class="recommendation">
+                    <div class="priority high">Prioridade Alta</div>
+                    <h4>Programa Estruturado de Adequação LGPD</h4>
+                    <p>Implementar metodologia PDCA estruturada em 4 fases: (1) Diagnóstico detalhado, (2) Desenvolvimento de políticas fundamentais, (3) Implementação de controles técnicos e organizacionais, (4) Monitoramento e melhoria contínua.</p>
+                    <p><strong>Referência Legal:</strong> Art. 50 da LGPD - Programa de Governança em Privacidade</p>
+                    <p><strong>Prazo:</strong> 120 dias para implementação das fases 1 e 2</p>
+                </div>
+                
+                <div class="recommendation">
+                    <div class="priority high">Prioridade Alta</div>
+                    <h4>Desenvolvimento de Políticas Fundamentais Adaptadas ao Setor</h4>
+                    <p>Criar política de privacidade, procedimentos de resposta a direitos dos titulares, política de segurança da informação e procedimentos de gestão de incidentes. Adaptar às especificidades do setor ${companyData.sector}.</p>
+                    <p><strong>Referência Legal:</strong> Art. 37, 46 e 48 da LGPD</p>
+                    <p><strong>Prazo:</strong> 90 dias para desenvolvimento completo</p>
+                </div>
+                
+                <div class="recommendation">
+                    <div class="priority high">Prioridade Alta</div>
+                    <h4>Análise de Obrigatoriedade de Designação de DPO</h4>
+                    <p>Avaliar critérios do Art. 41 da LGPD considerando: (1) volume de dados tratados, (2) sensibilidade dos dados, (3) atividade principal da empresa. Para empresas com ${companyData.employees} funcionários no setor ${companyData.sector}, recomenda-se designação de responsável interno qualificado.</p>
+                    <p><strong>Referência Legal:</strong> Art. 41 da LGPD - Encarregado pelo Tratamento de Dados Pessoais</p>
+                    <p><strong>Prazo:</strong> 30 dias para análise e 60 dias para designação</p>
+                </div>
+            `;
+        }
+
+        function getCriticalRecommendations() {
+            return `
+                <div class="recommendation">
+                    <div class="priority high">Prioridade Crítica</div>
+                    <h4>Ação Imediata de Adequação LGPD</h4>
+                    <p>Situação crítica requer intervenção imediata. Implementar em 24-48h: (1) Suspensão de atividades de tratamento não essenciais, (2) Inventário emergencial de dados pessoais, (3) Implementação de medidas básicas de segurança, (4) Designação de responsável interno.</p>
+                    <p><strong>Referência Legal:</strong> Art. 52 da LGPD - Sanções Administrativas</p>
+                    <p><strong>Prazo:</strong> 24-48 horas para medidas emergenciais</p>
+                </div>
+                
+                <div class="recommendation">
+                    <div class="priority high">Prioridade Crítica</div>
+                    <h4>Consultoria Especializada Urgente</h4>
+                    <p>Recomenda-se contratação imediata de consultoria jurídica especializada em LGPD para: (1) Avaliação de riscos de sanções, (2) Desenvolvimento de plano de adequação emergencial, (3) Implementação de controles mínimos de conformidade.</p>
+                    <p><strong>Justificativa:</strong> Risco elevado de sanções da ANPD (até 2% do faturamento)</p>
+                    <p><strong>Prazo:</strong> Contratação em 7 dias</p>
+                </div>
+                
+                <div class="recommendation">
+                    <div class="priority high">Prioridade Crítica</div>
+                    <h4>Investimento Prioritário em Adequação</h4>
+                    <p>Alocar recursos financeiros e humanos prioritários para adequação LGPD. Cronograma sugerido: (1) Semana 1-2: Medidas emergenciais, (2) Mês 1-3: Políticas básicas, (3) Mês 4-6: Implementação de controles, (4) Mês 7-12: Monitoramento e ajustes.</p>
+                    <p><strong>Metodologia:</strong> Abordagem de gestão de crise em conformidade</p>
+                    <p><strong>Prazo:</strong> Início imediato - cronograma de 12 meses</p>
+                </div>
+            `;
+        }
+
+        function sendToGoogleSheets() {
+            // Preparar dados para envio
+            const assessmentData = {
+                timestamp: new Date().toISOString(),
+                companyName: companyData.name,
+                sector: companyData.sector,
+                employees: companyData.employees,
+                email: companyData.email,
+                score: Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100),
+                responses: responses
+            };
+
+            // Simular envio para Google Sheets
+            // Em produção, você implementaria a integração real com Google Apps Script
+            console.log('Dados enviados para Google Sheets:', assessmentData);
+            
+            // Aqui você adicionaria a chamada real para o Google Apps Script
+            // fetch(https://script.google.com/macros/s/AKfycbxkkdNZe2KbMDNYfU5-69v8M-TiiQE1ZeyKb1ltj2vWnGeDqxmg0IbUY0WsOrDdh8Q7Jw/exec, {
+            //     method: 'POST',
+            //     body: JSON.stringify(assessmentData)
+            // });
+        }
+
+        // Adicionar event listeners para seleção de opções
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                // Remover seleção anterior
+                const options = document.querySelectorAll(`input[name="${e.target.name}"]`);
+                options.forEach(option => {
+                    option.closest('.option').classList.remove('selected');
+                });
+                
+                // Adicionar seleção atual
+                e.target.closest('.option').classList.add('selected');
             }
-
-            recommendations += `
-                <div style="margin-top: 30px; padding: 20px; background: #e9f7ef; border-radius: 10px; border-left: 5px solid #27ae60;">
-                    <h4 style="color: #27ae60; margin-bottom: 15px;">📚 Referências Legais Aplicáveis</h4>
-                    <p style="margin-bottom: 10px;"><strong>Art. 37 da LGPD:</strong> Registro das Atividades de Tratamento</p>
-                    <p style="margin-bottom: 10px;"><strong>Art. 46 da LGPD:</strong> Medidas de Segurança Técnicas e Administrativas</p>
-                    <p style="margin-bottom: 10px;"><strong>Art. 50 da LGPD:</strong> Programa de Governança em Privacidade</p>
-                    <p><strong>Diretrizes ANPD:</strong> Guia Orientativo para Definições dos Agentes de Tratamento</p>
-                </div>
-            `;
-
-            container.innerHTML = recommendations;
-        }
-
-        function getSectorSpecificAdvice(sector, level) {
-            const advice = {
-                'Tecnologia': {
-                    'excellent': 'Implementar Privacy by Design em novos produtos e APIs.',
-                    'adequate': 'Fortalecer controles de acesso a dados e logs de auditoria.',
-                    'partial': 'Priorizar mapeamento de dados em sistemas e aplicações.',
-                    'critical': 'Suspender coleta de dados não essenciais imediatamente.'
-                },
-                'Saúde': {
-                    'excellent': 'Implementar controles específicos para dados sensíveis de saúde.',
-                    'adequate': 'Revisar processos de compartilhamento com laboratórios e clínicas.',
-                    'partial': 'Estabelecer base legal específica para dados de saúde.',
-                    'critical': 'Proteger dados de pacientes com medidas emergenciais.'
-                },
-                'Financeiro': {
-                    'excellent': 'Alinhar com regulamentações do Banco Central.',
-                    'adequate': 'Fortalecer controles de dados financeiros e transacionais.',
-                    'partial': 'Implementar controles específicos para dados bancários.',
-                    'critical': 'Proteger dados financeiros com máxima prioridade.'
-                },
-                'Educação': {
-                    'excellent': 'Implementar controles para dados de menores.',
-                    'adequate': 'Revisar processos de coleta de dados de alunos.',
-                    'partial': 'Estabelecer consentimento adequado para menores.',
-                    'critical': 'Proteger dados de estudantes imediatamente.'
-                },
-                'Varejo': {
-                    'excellent': 'Otimizar processos de marketing direto.',
-                    'adequate': 'Revisar políticas de cookies e tracking.',
-                    'partial': 'Implementar controles para dados de clientes.',
-                    'critical': 'Suspender campanhas de marketing não autorizadas.'
-                }
-            };
-            
-            return advice[sector]?.[level] || 'Implementar controles específicos para o setor.';
-        }
-
-        function getCompanySizeAdvice(size, context) {
-            const advice = {
-                'Microempresa': {
-                    'monitoring': 'Utilize ferramentas gratuitas de monitoramento.',
-                    'strengthening': 'Foque em controles essenciais e de baixo custo.',
-                    'documentation': 'Use templates simplificados de documentação.',
-                    'structured': 'Implemente programa básico em 3 fases.',
-                    'policies': 'Utilize modelos adaptados para micro empresas.',
-                    'emergency': 'Foque nas medidas mais críticas primeiro.',
-                    'consulting': 'Busque consultoria com preços acessíveis.'
-                },
-                'Pequena Empresa': {
-                    'monitoring': 'Implemente sistema básico de alertas.',
-                    'strengthening': 'Priorize controles de maior impacto.',
-                    'documentation': 'Desenvolva documentação proporcional ao porte.',
-                    'structured': 'Programa em 4 fases com recursos limitados.',
-                    'policies': 'Políticas adaptadas para pequenas empresas.',
-                    'emergency': 'Organize equipe mínima de resposta.',
-                    'consulting': 'Consultoria focada em resultados rápidos.'
-                },
-                'Média Empresa': {
-                    'monitoring': 'Sistema de monitoramento automatizado.',
-                    'strengthening': 'Controles robustos com equipe dedicada.',
-                    'documentation': 'Documentação completa e estruturada.',
-                    'structured': 'Programa completo em 6 fases.',
-                    'policies': 'Políticas abrangentes por área.',
-                    'emergency': 'Comitê de crise estruturado.',
-                    'consulting': 'Consultoria especializada por área.'
-                },
-                'Grande Empresa': {
-                    'monitoring': 'Centro de operações de privacidade.',
-                    'strengthening': 'Controles enterprise com automação.',
-                    'documentation': 'Sistema de gestão documental.',
-                    'structured': 'Programa corporativo em múltiplas fases.',
-                    'policies': 'Políticas corporativas integradas.',
-                    'emergency': 'Plano de contingência corporativo.',
-                    'consulting': 'Consultoria estratégica de alto nível.'
-                },
-                'Corporação': {
-                    'monitoring': 'Plataforma global de monitoramento.',
-                    'strengthening': 'Controles multinacionais integrados.',
-                    'documentation': 'Sistema global de documentação.',
-                    'structured': 'Programa global multi-jurisdicional.',
-                    'policies': 'Políticas globais harmonizadas.',
-                    'emergency': 'Centro global de resposta a crises.',
-                    'consulting': 'Consultoria global especializada.'
-                }
-            };
-            
-            return advice[size]?.[context] || '';
-        }
-
-        function getSectorPolicies(sector) {
-            const policies = {
-                'Tecnologia': 'Política de Desenvolvimento Seguro, Política de APIs',
-                'Saúde': 'Política de Dados de Saúde, Política de Telemedicina',
-                'Financeiro': 'Política de Dados Financeiros, Política de Open Banking',
-                'Educação': 'Política de Dados de Menores, Política de EAD',
-                'Varejo': 'Política de E-commerce, Política de Marketing Digital',
-                'Serviços': 'Política de Atendimento ao Cliente, Política de CRM',
-                'Indústria': 'Política de IoT Industrial, Política de Fornecedores',
-                'Governo/Público': 'Política de Transparência, Política de Dados Públicos'
-            };
-            
-            return policies[sector] || 'Políticas específicas do setor';
-        }
-
-        // Adicionar event listeners para as opções
-        document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.option')) {
-                    const option = e.target.closest('.option');
-                    const radio = option.querySelector('input[type="radio"]');
-                    
-                    // Remover seleção anterior
-                    const questionOptions = option.parentElement.querySelectorAll('.option');
-                    questionOptions.forEach(opt => opt.classList.remove('selected'));
-                    
-                    // Adicionar seleção atual
-                    option.classList.add('selected');
-                    radio.checked = true;
-                }
-            });
-
-            // Inicializar
-            showStep(0);
         });
+
+        // Inicializar
+        showStep(0);
     </script>
 </body>
 </html>
