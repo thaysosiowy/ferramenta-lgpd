@@ -1937,7 +1937,7 @@
             // Em produção, você implementaria a integração real com Google Apps Script
             console.log('Dados enviados para Google Sheets:', assessmentData);
             
-           // Enviar para Google Sheets
+           // Integração com Google Sheets
 fetch('https://script.google.com/macros/s/AKfycbxctXNZllFMRKtZ_No0S6HDl81EyM6dmd1ZHdPbHwcoCewq5R-xLDSKGIlO7Y3ah4Ibag/exec', {
     method: 'POST',
     headers: {
@@ -1947,10 +1947,10 @@ fetch('https://script.google.com/macros/s/AKfycbxctXNZllFMRKtZ_No0S6HDl81EyM6dmd
 })
 .then(response => response.json())
 .then(data => {
-    console.log('Dados enviados com sucesso:', data);
+    console.log('Sucesso:', data);
 })
 .catch(error => {
-    console.error('Erro ao enviar dados:', error);
+    console.error('Erro:', error);
 });
         }
 
