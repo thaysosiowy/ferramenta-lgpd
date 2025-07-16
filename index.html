@@ -1922,19 +1922,20 @@
         }
 
         function sendToGoogleSheets() {
-            // Preparar dados para envio
-            const assessmentData = {
-                timestamp: new Date().toISOString(),
-                companyName: companyData.name,
-                sector: companyData.sector,
-                employees: companyData.employees,
-                email: companyData.email,
-                score: Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100),
-                responses: responses
-            };
+    // Preparar dados para envio
+    const assessmentData = {
+        timestamp: new Date().toISOString(),
+        empresa: companyData.name,
+        setor: companyData.sector,
+        funcionarios: companyData.employees,
+        email: companyData.email,
+        pontuacao: Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100),
+        classificacao: 'Calculada',
+        ip: 'N/A'
+    };
 
-           // Enviar para Google Sheets
-    fetch(https://script.google.com/macros/s/AKfycbxctXNZllFMRKtZ_No0S6HDl81EyM6dmd1ZHdPbHwcoCewq5R-xLDSKGIlO7Y3ah4Ibag/exec, {
+    // Enviar para Google Sheets
+    fetch('https://script.google.com/macros/s/AKfycbxctXNZllFMRKtZ_No0S6HDl81EyM6dmd1ZHdPbHwcoCewq5R-xLDSKGIlO7Y3ah4Ibag/exec', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1948,6 +1949,8 @@
     .catch(error => {
         console.error('Erro ao enviar dados:', error);
     });
+}
+
         }
 
         // Adicionar event listeners para seleção de opções
