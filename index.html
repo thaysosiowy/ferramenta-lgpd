@@ -1922,7 +1922,7 @@
         }
 
         function sendToGoogleSheets() {
-               // Preparar dados para envio
+            // Preparar dados para envio
             const assessmentData = {
                 timestamp: new Date().toISOString(),
                 companyName: companyData.name,
@@ -1933,10 +1933,25 @@
                 responses: responses
             };
 
+            // Simular envio para Google Sheets
+            // Em produção, você implementaria a integração real com Google Apps Script
+            console.log('Dados enviados para Google Sheets:', assessmentData);
+            
            // Enviar para Google Sheets
-    fetch('https://script.google.com/macros/s/AKfycbxctXNZllFMRKtZ_No0S6HDl81EyM6dmd1ZHdPbHwcoCewq5R-xLDSKGIlO7Y3ah4Ibag/exec', {
-}
-
+fetch('https://script.google.com/macros/s/AKfycbxctXNZllFMRKtZ_No0S6HDl81EyM6dmd1ZHdPbHwcoCewq5R-xLDSKGIlO7Y3ah4Ibag/exec', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(assessmentData)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Dados enviados com sucesso:', data);
+})
+.catch(error => {
+    console.error('Erro ao enviar dados:', error);
+});
         }
 
         // Adicionar event listeners para seleção de opções
@@ -1958,4 +1973,4 @@
     </script>
 </body>
 </html>
-
+                
