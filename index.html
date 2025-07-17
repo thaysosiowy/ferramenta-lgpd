@@ -1746,22 +1746,26 @@
         }
 
         function finishAssessment() {
-            if (validateStep()) {
-                currentStep = 11;
-                showStep(currentStep);
-                
-                // Mostrar loading
-                document.getElementById('loadingResults').style.display = 'block';
-                document.getElementById('resultsContent').style.display = 'none';
-                
-                // Simular processamento
-                setTimeout(() => {
-                    calculateResults();
-                    sendToGoogleSheets();
-                }, 2000);
-            }
-        }
-
+    if (validateStep()) {
+        currentStep = 11;
+        showStep(currentStep);
+        
+        // Mostrar loading
+        document.getElementById('loadingResults').style.display = 'block';
+        document.getElementById('resultsContent').style.display = 'none';
+        
+        // Calcular e mostrar resultados PRIMEIRO
+        setTimeout(() => {
+            calculateResults();
+            
+            // 🎯 ATRASAR o envio para dar tempo de ver o resultado
+            setTimeout(() => {
+                sendToGoogleSheets();
+            }, 200000); // 200 segundos de delay
+            
+        }, 2000);
+    }
+}
         function calculateResults() {
             const totalQuestions = 45;
             const maxScore = totalQuestions * 4;
