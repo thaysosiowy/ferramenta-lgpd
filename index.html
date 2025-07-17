@@ -1803,29 +1803,42 @@
             document.getElementById('resultsContent').style.display = 'block';
         }
 
-    function sendToGoogleSheets() {
+  function sendToGoogleSheets() {
     const score = Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100);
     
-    // 🎯 Determinar classificação
     let classification = '';
     if (score >= 85) classification = 'Conformidade Excelente';
     else if (score >= 70) classification = 'Conformidade Adequada';
     else if (score >= 40) classification = 'Conformidade Parcial';
     else classification = 'Situação Crítica';
     
-    // 🎯 Capturar TODO o texto das recomendações
+    // 🎯 NOVA VERSÃO: Capturar recomendações de forma mais ampla
     let recommendations = '';
     try {
-        const recommendationsContainer = document.querySelector('.recommendations-container');
-        if (recommendationsContainer) {
-            const recommendationElements = recommendationsContainer.querySelectorAll('.recommendation');
+        // Procurar por várias possibilidades
+        const possibleContainers = [
+            '.recommendations-container',
+            '.recommendations',
+            '.recommendation-section',
+            '.assessment-recommendations',
+            '#recommendations'
+        ];
+        
+        let foundContainer = null;
+        for (let selector of possibleContainers) {
+            foundContainer = document.querySelector(selector);
+            if (foundContainer) break;
+        }
+        
+        if (foundContainer) {
+            const recommendationElements = foundContainer.querySelectorAll('.recommendation, .recommendation-item, .recomendacao');
             
             let fullText = [];
             recommendationElements.forEach((rec, index) => {
-                const title = rec.querySelector('h3')?.textContent || '';
-                const description = rec.querySelector('p')?.textContent || '';
-                const reference = rec.querySelector('.legal-reference')?.textContent || '';
-                const deadline = rec.querySelector('.deadline')?.textContent || '';
+                const title = rec.querySelector('h3, h4, .title')?.textContent || '';
+                const description = rec.querySelector('p, .description')?.textContent || '';
+                const reference = rec.querySelector('.legal-reference, .reference')?.textContent || '';
+                const deadline = rec.querySelector('.deadline, .prazo')?.textContent || '';
                 
                 const fullRecommendation = `RECOMENDAÇÃO ${index + 1}: ${title}\n${description}\n${reference}\n${deadline}\n---`;
                 fullText.push(fullRecommendation);
@@ -1833,7 +1846,7 @@
             
             recommendations = fullText.join('\n\n');
         } else {
-            recommendations = 'Container de recomendações não encontrado';
+            recommendations = 'Nenhum container de recomendações encontrado';
         }
     } catch (error) {
         recommendations = 'Erro ao capturar recomendações: ' + error.message;
