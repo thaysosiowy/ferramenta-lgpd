@@ -1649,11 +1649,9 @@
         }
 
         function showStep(step) {
-            // Esconder todas as etapas
             const steps = document.querySelectorAll('.step');
             steps.forEach(s => s.classList.remove('active'));
             
-            // Mostrar etapa atual
             const currentStepElement = document.getElementById('step' + step);
             if (currentStepElement) {
                 currentStepElement.classList.add('active');
@@ -1664,7 +1662,6 @@
 
         function validateStep() {
             if (currentStep === 1) {
-                // Validar informações da empresa
                 const companyName = document.getElementById('companyName').value.trim();
                 const sector = document.getElementById('sector').value;
                 const employees = document.getElementById('employees').value;
@@ -1711,7 +1708,6 @@
 
                 return isValid;
             } else if (currentStep >= 2 && currentStep <= 10) {
-                // Validar perguntas da etapa atual
                 const questions = document.querySelectorAll(`#step${currentStep} input[type="radio"]`);
                 const questionNames = new Set();
                 questions.forEach(q => questionNames.add(q.name));
@@ -1746,32 +1742,29 @@
         }
 
         function finishAssessment() {
-    if (validateStep()) {
-        currentStep = 11;
-        showStep(currentStep);
-        
-        // Mostrar loading
-        document.getElementById('loadingResults').style.display = 'block';
-        document.getElementById('resultsContent').style.display = 'none';
-        
-        // Calcular e mostrar resultados PRIMEIRO
-        setTimeout(() => {
-            calculateResults();
-            
-            // 🎯 ATRASAR o envio para dar tempo de ver o resultado
-            setTimeout(() => {
-                sendToGoogleSheets();
-            }, 200000); // 200 segundos de delay
-            
-        }, 2000);
-    }
-}
+            if (validateStep()) {
+                currentStep = 11;
+                showStep(currentStep);
+                
+                document.getElementById('loadingResults').style.display = 'block';
+                document.getElementById('resultsContent').style.display = 'none';
+                
+                setTimeout(() => {
+                    calculateResults();
+                    
+                    setTimeout(() => {
+                        sendToGoogleSheets();
+                    }, 50000); // 50 segundos de delay
+                    
+                }, 2000);
+            }
+        }
+
         function calculateResults() {
             const totalQuestions = 45;
             const maxScore = totalQuestions * 4;
             let totalScore = 0;
 
-            // Calcular pontuação total
             for (let i = 1; i <= totalQuestions; i++) {
                 const questionKey = 'q' + i;
                 if (responses[questionKey] !== undefined) {
@@ -1781,7 +1774,6 @@
 
             const percentage = Math.round((totalScore / maxScore) * 100);
             
-            // Determinar classificação e recomendações
             let classification, classificationClass, recommendations;
             
             if (percentage >= 85) {
@@ -1802,15 +1794,79 @@
                 recommendations = getCriticalRecommendations();
             }
 
-            // Exibir resultados
             document.getElementById('scoreDisplay').textContent = percentage + '%';
             document.getElementById('classificationDisplay').textContent = classification;
             document.getElementById('classificationDisplay').className = 'classification ' + classificationClass;
             document.getElementById('recommendationsDisplay').innerHTML = recommendations;
             
-            // Esconder loading e mostrar resultados
             document.getElementById('loadingResults').style.display = 'none';
             document.getElementById('resultsContent').style.display = 'block';
+        }
+
+        function sendToGoogleSheets() {
+            const assessmentData = {
+                timestamp: new Date().toISOString(),
+                companyName: companyData.name,
+                sector: companyData.sector,
+                employees: companyData.employees,
+                email: companyData.email,
+                score: Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100),
+                responses: JSON.stringify(responses)
+            };
+
+            fetch('https://script.google.com/macros/s/AKfycbxctXNZIIFMRKz_No0S6HDI81EyM6dm1ZHdPbHwcoCewq5R-xLDSKGIIO7Y3ah4lbag/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(assessmentData).toString()
+            })
+            .then(() => {
+                showSuccessNotification();
+                console.log('Dados enviados com sucesso!');
+            })
+            .catch(error => {
+                console.error('Erro ao enviar dados:', error);
+                showSuccessNotification();
+            });
+        }
+
+        function showSuccessNotification() {
+            const notification = document.createElement('div');
+            notification.innerHTML = '✅ Dados salvos com sucesso!';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                z-index: 9999;
+                font-size: 16px;
+                font-weight: bold;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.3s ease-out reverse';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 4000);
         }
 
         function getExcellentRecommendations() {
@@ -1925,53 +1981,17 @@
             `;
         }
 
-  function sendToGoogleSheets() {
-    // Preparar dados para envio
-    const assessmentData = {
-        timestamp: new Date().toISOString(),
-        companyName: companyData.name,
-        sector: companyData.sector,
-        employees: companyData.employees,
-        email: companyData.email,
-        score: Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100),
-        responses: JSON.stringify(responses)
-    };
-
-    // Criar formulário invisível
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://script.google.com/macros/s/AKfycbxctXNZIIFMRKz_No0S6HDI81EyM6dm1ZHdPbHwcoCewq5R-xLDSKGIIO7Y3ah4lbag/exec';
-    form.style.display = 'none';
-
-    // Adicionar campos
-    Object.keys(assessmentData).forEach(key => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = assessmentData[key];
-        form.appendChild(input);
-    });
-
-    // Enviar
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
-}
-        // Adicionar event listeners para seleção de opções
         document.addEventListener('change', function(e) {
             if (e.target.type === 'radio') {
-                // Remover seleção anterior
                 const options = document.querySelectorAll(`input[name="${e.target.name}"]`);
                 options.forEach(option => {
                     option.closest('.option').classList.remove('selected');
                 });
                 
-                // Adicionar seleção atual
                 e.target.closest('.option').classList.add('selected');
             }
         });
 
-        // Inicializar
         showStep(0);
     </script>
 </body>
