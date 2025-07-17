@@ -1921,40 +1921,64 @@
             `;
         }
 
-       function sendToGoogleSheets() {
-    // Preparar dados para envio
-    const assessmentData = {
+  function sendToGoogleSheets() {
+    const responses = getResponses();
+    const score = calculateScore(responses);
+    
+    // Dados para enviar
+    const dados = {
         timestamp: new Date().toISOString(),
-        companyName: companyData.name,
-        sector: companyData.sector,
-        employees: companyData.employees,
-        email: companyData.email,
-        score: Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100),
-        responses: JSON.stringify(responses) // Converter para string
+        companyName: document.getElementById('companyName').value,
+        sector: document.getElementById('sector').value,
+        employees: document.getElementById('employees').value,
+        email: document.getElementById('email').value,
+        score: score,
+        responses: JSON.stringify(responses)
     };
-
-    // Criar formulário invisível (bypassa CORS)
+    
+    // 🎯 ENVIO EM BACKGROUND - sem mudar a tela
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = 'https://script.google.com/macros/s/AKfycbxctXNZllFMRKtZ_No0S6HDl81EyM6dmd1ZHdPbHwcoCewq5R-xLDSKGIlO7Y3ah4Ibag/exec';
+    form.action = 'https://script.google.com/macros/s/AKfycbxctXNZIIFMRKz_No0S6HDI81EyM6dm1ZHdPbHwcoCewq5R-xLDSKGIIO7Y3ah4lbag/exec';
+    form.target = '_blank'; // Abre em nova aba (invisível)
     form.style.display = 'none';
-
+    
     // Adicionar campos
-    Object.keys(assessmentData).forEach(key => {
+    Object.keys(dados).forEach(key => {
         const input = document.createElement('input');
         input.type = 'hidden';
         input.name = key;
-        input.value = assessmentData[key];
+        input.value = dados[key];
         form.appendChild(input);
     });
-
-    // Enviar
+    
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);
     
-    console.log('Dados enviados via formulário para Google Sheets');
-    alert('Avaliação concluída! Dados salvos no sistema.');
+    // 🎯 MENSAGEM DISCRETA de confirmação
+    setTimeout(() => {
+        const notification = document.createElement('div');
+        notification.innerHTML = '✅ Dados salvos com sucesso!';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 9999;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        `;
+        document.body.appendChild(notification);
+        
+        // Remove a notificação após 3 segundos
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }, 1000);
 }
         // Adicionar event listeners para seleção de opções
         document.addEventListener('change', function(e) {
