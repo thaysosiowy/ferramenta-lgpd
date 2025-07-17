@@ -1803,15 +1803,21 @@
             document.getElementById('resultsContent').style.display = 'block';
         }
 
-     function sendToGoogleSheets() {
+    function sendToGoogleSheets() {
     const score = Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100);
     
-    // 🎯 NOVO: Capturar TODO o texto das recomendações
+    // 🎯 Determinar classificação
+    let classification = '';
+    if (score >= 85) classification = 'Conformidade Excelente';
+    else if (score >= 70) classification = 'Conformidade Adequada';
+    else if (score >= 40) classification = 'Conformidade Parcial';
+    else classification = 'Situação Crítica';
+    
+    // 🎯 Capturar TODO o texto das recomendações
     let recommendations = '';
     try {
         const recommendationsContainer = document.querySelector('.recommendations-container');
         if (recommendationsContainer) {
-            // Pegar todas as divs .recommendation
             const recommendationElements = recommendationsContainer.querySelectorAll('.recommendation');
             
             let fullText = [];
@@ -1821,12 +1827,7 @@
                 const reference = rec.querySelector('.legal-reference')?.textContent || '';
                 const deadline = rec.querySelector('.deadline')?.textContent || '';
                 
-                const fullRecommendation = `
-RECOMENDAÇÃO ${index + 1}: ${title}
-${description}
-${reference}
-${deadline}
----`;
+                const fullRecommendation = `RECOMENDAÇÃO ${index + 1}: ${title}\n${description}\n${reference}\n${deadline}\n---`;
                 fullText.push(fullRecommendation);
             });
             
@@ -1845,6 +1846,7 @@ ${deadline}
         employees: companyData.employees,
         email: companyData.email,
         score: score,
+        classification: classification,
         recommendations: recommendations
     };
 
