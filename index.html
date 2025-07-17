@@ -1803,34 +1803,42 @@
             document.getElementById('resultsContent').style.display = 'block';
         }
 
-        function sendToGoogleSheets() {
-            const assessmentData = {
-                timestamp: new Date().toISOString(),
-                companyName: companyData.name,
-                sector: companyData.sector,
-                employees: companyData.employees,
-                email: companyData.email,
-                score: Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100),
-                responses: JSON.stringify(responses)
-            };
+       function sendToGoogleSheets() {
+    const score = Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100);
+    
+    // 🎯 NOVO: Gerar recomendações específicas
+    const recommendations = generateRecommendations(score, companyData.sector);
+    
+    const assessmentData = {
+        timestamp: new Date().toISOString(),
+        companyName: companyData.name,
+        sector: companyData.sector,
+        employees: companyData.employees,
+        email: companyData.email,
+        score: score,
+        recommendations: JSON.stringify(recommendations) // 🎯 NOVO: Salvar recomendações
+    };
 
-            fetch('https://script.google.com/macros/s/AKfycbzi9Qez0iNoQEdpkmmaNwJ4Iw2yFZpnyzQAjJT9ANY2WTzqnWPypED7VVYhjNXTaaNQww/exec', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams(assessmentData).toString()
-            })
-            .then(() => {
-                showSuccessNotification();
-                console.log('Dados enviados com sucesso!');
-            })
-            .catch(error => {
-                console.error('Erro ao enviar dados:', error);
-                showSuccessNotification();
-            });
-        }
+    // Método que já estava funcionando
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://script.google.com/macros/s/AKfycbwYrm85ruNKeYZ7U6olSXs2ubGx4a_eKHcKChuzP42xPPs5nq8PF1n00WMAZaKCcHksnA/exec';
+    form.style.display = 'none';
+
+    Object.keys(assessmentData).forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = assessmentData[key];
+        form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+    
+    showSuccessNotification();
+}
 
         function showSuccessNotification() {
             const notification = document.createElement('div');
