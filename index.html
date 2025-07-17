@@ -1803,7 +1803,7 @@
             document.getElementById('resultsContent').style.display = 'block';
         }
 
-  function sendToGoogleSheets() {
+ function sendToGoogleSheets() {
     const score = Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100);
     
     let classification = '';
@@ -1812,42 +1812,44 @@
     else if (score >= 40) classification = 'Conformidade Parcial';
     else classification = 'Situação Crítica';
     
-    // 🎯 NOVA VERSÃO: Capturar recomendações de forma mais ampla
+    // 🎯 VERSÃO SUPER ROBUSTA: Capturar por TEXTO
     let recommendations = '';
     try {
-        // Procurar por várias possibilidades
-        const possibleContainers = [
-            '.recommendations-container',
-            '.recommendations',
-            '.recommendation-section',
-            '.assessment-recommendations',
-            '#recommendations'
-        ];
+        // Procurar por qualquer elemento que contenha textos das recomendações
+        const allElements = document.querySelectorAll('*');
+        let recommendationTexts = [];
         
-        let foundContainer = null;
-        for (let selector of possibleContainers) {
-            foundContainer = document.querySelector(selector);
-            if (foundContainer) break;
-        }
-        
-        if (foundContainer) {
-            const recommendationElements = foundContainer.querySelectorAll('.recommendation, .recommendation-item, .recomendacao');
+        for (let element of allElements) {
+            const text = element.textContent || '';
             
-            let fullText = [];
-            recommendationElements.forEach((rec, index) => {
-                const title = rec.querySelector('h3, h4, .title')?.textContent || '';
-                const description = rec.querySelector('p, .description')?.textContent || '';
-                const reference = rec.querySelector('.legal-reference, .reference')?.textContent || '';
-                const deadline = rec.querySelector('.deadline, .prazo')?.textContent || '';
+            // Procurar por padrões específicos das recomendações
+            if (text.includes('Programa Estruturado de Adequação LGPD') ||
+                text.includes('Desenvolvimento de Políticas Fundamentais') ||
+                text.includes('Art. 50 da LGPD') ||
+                text.includes('Prioridade Alta') ||
+                text.includes('Prazo:')) {
                 
-                const fullRecommendation = `RECOMENDAÇÃO ${index + 1}: ${title}\n${description}\n${reference}\n${deadline}\n---`;
-                fullText.push(fullRecommendation);
-            });
-            
-            recommendations = fullText.join('\n\n');
-        } else {
-            recommendations = 'Nenhum container de recomendações encontrado';
+                // Se encontrou um elemento com recomendação, capturar o texto
+                if (element.tagName && !recommendationTexts.includes(text)) {
+                    recommendationTexts.push(text);
+                }
+            }
         }
+        
+        // Se não encontrou nada específico, tentar capturar tudo depois da pontuação
+        if (recommendationTexts.length === 0) {
+            const bodyText = document.body.textContent || '';
+            const scoreIndex = bodyText.indexOf(score + '%');
+            if (scoreIndex !== -1) {
+                const afterScore = bodyText.substring(scoreIndex + 10);
+                recommendations = afterScore.substring(0, 2000); // Primeiros 2000 caracteres
+            } else {
+                recommendations = 'Não foi possível capturar as recomendações';
+            }
+        } else {
+            recommendations = recommendationTexts.join('\n\n---\n\n');
+        }
+        
     } catch (error) {
         recommendations = 'Erro ao capturar recomendações: ' + error.message;
     }
