@@ -1803,11 +1803,40 @@
             document.getElementById('resultsContent').style.display = 'block';
         }
 
-       function sendToGoogleSheets() {
+     function sendToGoogleSheets() {
     const score = Math.round((Object.values(responses).reduce((a, b) => a + b, 0) / (45 * 4)) * 100);
     
-    // 🎯 NOVO: Gerar recomendações específicas
-    const recommendations = generateRecommendations(score, companyData.sector);
+    // 🎯 NOVO: Capturar TODO o texto das recomendações
+    let recommendations = '';
+    try {
+        const recommendationsContainer = document.querySelector('.recommendations-container');
+        if (recommendationsContainer) {
+            // Pegar todas as divs .recommendation
+            const recommendationElements = recommendationsContainer.querySelectorAll('.recommendation');
+            
+            let fullText = [];
+            recommendationElements.forEach((rec, index) => {
+                const title = rec.querySelector('h3')?.textContent || '';
+                const description = rec.querySelector('p')?.textContent || '';
+                const reference = rec.querySelector('.legal-reference')?.textContent || '';
+                const deadline = rec.querySelector('.deadline')?.textContent || '';
+                
+                const fullRecommendation = `
+RECOMENDAÇÃO ${index + 1}: ${title}
+${description}
+${reference}
+${deadline}
+---`;
+                fullText.push(fullRecommendation);
+            });
+            
+            recommendations = fullText.join('\n\n');
+        } else {
+            recommendations = 'Container de recomendações não encontrado';
+        }
+    } catch (error) {
+        recommendations = 'Erro ao capturar recomendações: ' + error.message;
+    }
     
     const assessmentData = {
         timestamp: new Date().toISOString(),
@@ -1816,10 +1845,9 @@
         employees: companyData.employees,
         email: companyData.email,
         score: score,
-        recommendations: JSON.stringify(recommendations) // 🎯 NOVO: Salvar recomendações
+        recommendations: recommendations
     };
 
-    // Método que já estava funcionando
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = 'https://script.google.com/macros/s/AKfycbwYrm85ruNKeYZ7U6olSXs2ubGx4a_eKHcKChuzP42xPPs5nq8PF1n00WMAZaKCcHksnA/exec';
